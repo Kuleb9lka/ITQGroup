@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 18022026-create-enums
+      author: bogdan_lopatenko
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE document_status AS ENUM ('DRAFT', 'SUBMITTED', 'APPROVED');
+              CREATE TYPE action AS ENUM ('SUBMIT', 'APPROVE');

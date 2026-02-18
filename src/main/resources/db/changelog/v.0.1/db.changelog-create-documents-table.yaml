@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 18022026-create-document-table
+      author: bogdan_lopatenko
+      changes:
+        - createTable:
+            tableName: documents
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: unique_number
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: document_status
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_date
+                  type: datetime
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: documents
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_documents_users
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
