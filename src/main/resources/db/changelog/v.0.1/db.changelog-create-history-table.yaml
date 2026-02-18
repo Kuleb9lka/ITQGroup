@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 18022026-create-history-table
+      author: bogdan_lopatenko
+      changes:
+        - createTable:
+            tableName: history
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action
+                  type: action
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: varchar(1000)
+                  constraints:
+                    nullable: true
