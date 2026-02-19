@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,6 +42,5 @@ public class ApprovalRegistry {
 
     @Column(name = "approved_at", nullable = false)
     @NotNull(message = "Approval date time can't be null")
-    @PastOrPresent(message = "Approval date can't be in future")
     private LocalDateTime approvedAt;
 }

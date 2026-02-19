@@ -1,6 +1,5 @@
 package com.ITQGroup.entity;
 
-import com.ITQGroup.annotation.ValidDateRange;
 import com.ITQGroup.enums.DocumentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +13,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -39,7 +37,6 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@ValidDateRange(startField = "createDate", endField = "updateDate")
 public class Document {
 
     @Id
@@ -71,12 +68,10 @@ public class Document {
     @Column(name = "create_date", nullable = false)
     @NotNull(message = "Create date can't be null")
     @CreationTimestamp
-    @PastOrPresent(message = "Create date can't be in future")
     private LocalDateTime createDate;
 
     @Column(name = "update_date")
     @UpdateTimestamp
-    @PastOrPresent(message = "Update date can't be in future")
     private LocalDateTime updateDate;
 
     @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)

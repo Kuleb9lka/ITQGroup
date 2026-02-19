@@ -1,6 +1,5 @@
 package com.ITQGroup.dto.document;
 
-import com.ITQGroup.enums.DocumentStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -22,6 +21,4 @@ public class DocumentRequestDto {
     @Size(min = 5, message = "Minimal document name length 5 symbols")
     private String name;
 
-    @NotNull(message = "Status can't be null")
-    private DocumentStatus status;
 }
