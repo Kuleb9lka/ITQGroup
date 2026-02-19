@@ -1,7 +1,6 @@
 package com.ITQGroup.dto.approval_registry;
 
 import com.ITQGroup.dto.document.DocumentResponseDto;
-import com.ITQGroup.dto.user.UserResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class ApprovalRegistryResponseDto {
 
     private DocumentResponseDto document;
 
-    private UserResponseDto approvedBy;
+    private Long authorId;
 
     private LocalDateTime approvedAt;
 }

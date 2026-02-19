@@ -55,7 +55,7 @@ public class Document {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Long user;
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Name can't be null or blank")

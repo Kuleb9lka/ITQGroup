@@ -3,9 +3,6 @@ databaseChangeLog:
       file: db.changelog-create-enums.yaml
       relativeToChangelogFile: true
   - include:
-      file: db.changelog-create-users-table.yaml
-      relativeToChangelogFile: true
-  - include:
       file: db.changelog-create-documents-table.yaml
       relativeToChangelogFile: true
   - include:

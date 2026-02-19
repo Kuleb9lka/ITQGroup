@@ -18,9 +18,9 @@ public class ApprovalRegistryRequestDto {
     @Positive(message = "Document ID can't be negative")
     private Long documentId;
 
-    @NotNull(message = "User ID can't be null")
-    @Positive(message = "User ID can't be negative")
-    private Long userId;
+    @NotNull(message = "Author ID can't be null")
+    @Positive(message = "Author ID can't be negative")
+    private Long authorId;
 
     @NotNull(message = "Approval date time cant be null")
     @PastOrPresent(message = "Approval date time cant be in future")
