@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getById(Long id) {
 
-        User userById = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(ExceptionConstant.USER_NOT_FOUND_BY_ID + id));
+        User userById = userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException(ExceptionConstant.USER_NOT_FOUND_BY_ID + id));
 
         return userMapper.toResponseDto(userById);
     }

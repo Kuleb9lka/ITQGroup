@@ -23,5 +23,5 @@ public class DocumentRequestDto {
     private String name;
 
     @NotNull(message = "Status can't be null")
-    private DocumentStatus documentStatus;
+    private DocumentStatus status;
 }

@@ -24,7 +24,7 @@ public class DocumentResponseDto {
 
     private String name;
 
-    private DocumentStatus documentStatus;
+    private DocumentStatus status;
 
     private LocalDateTime createDate;
 
