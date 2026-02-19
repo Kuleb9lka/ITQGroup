@@ -18,7 +18,7 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
-                  name: user_id
+                  name: author_id
                   type: bigint
                   constraints:
                     nullable: false
