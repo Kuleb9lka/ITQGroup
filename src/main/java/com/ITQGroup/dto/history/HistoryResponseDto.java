@@ -1,7 +1,6 @@
 package com.ITQGroup.dto.history;
 
 import com.ITQGroup.dto.document.DocumentResponseDto;
-import com.ITQGroup.dto.user.UserResponseDto;
 import com.ITQGroup.enums.Action;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class HistoryResponseDto {
 
     private DocumentResponseDto document;
 
-    private UserResponseDto user;
+    private Long authorId;
 
     private LocalDateTime updateDate;
 
