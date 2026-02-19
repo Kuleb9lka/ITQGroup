@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
@@ -49,6 +50,7 @@ public class History {
 
     @Column(name = "update_date", nullable = false)
     @NotNull(message = "Update date can't be null")
+    @UpdateTimestamp
     @PastOrPresent(message = "Update date can't be in future")
     private LocalDateTime updateDate;
 

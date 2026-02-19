@@ -23,7 +23,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -64,14 +66,16 @@ public class Document {
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @NotNull(message = "Status can't be null")
-    private DocumentStatus documentStatus;
+    private DocumentStatus status;
 
     @Column(name = "create_date", nullable = false)
     @NotNull(message = "Create date can't be null")
+    @CreationTimestamp
     @PastOrPresent(message = "Create date can't be in future")
     private LocalDateTime createDate;
 
     @Column(name = "update_date")
+    @UpdateTimestamp
     @PastOrPresent(message = "Update date can't be in future")
     private LocalDateTime updateDate;
 
