@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 18022026-create-history-table
+      id: 19022026-create-approval-registry
       author: bogdan_lopatenko
       changes:
         - createTable:
-            tableName: history
+            tableName: approval_registry
             columns:
               - column:
                   name: id
@@ -12,22 +12,26 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
+                  name: document_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
                   name: author_id
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: update_date
+                  name: approved_at
                   type: datetime
                   constraints:
                     nullable: false
-              - column:
-                  name: action
-                  type: action
-                  constraints:
-                    nullable: false
-              - column:
-                  name: comment
-                  type: varchar(1000)
-                  constraints:
-                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: approval_registry
+            baseColumnNames: document_id
+            referencedTableName: documents
+            referencedColumnNames: id
+            constraintName: fk_approval_registry_document
+            onDelete: RESTRICT
+            onUpdate: RESTRICT

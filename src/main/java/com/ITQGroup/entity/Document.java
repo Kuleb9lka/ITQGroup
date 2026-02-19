@@ -1,6 +1,5 @@
 package com.ITQGroup.entity;
 
-import com.ITQGroup.annotation.ValidDateRange;
 import com.ITQGroup.enums.DocumentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,23 +9,25 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,7 +37,6 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@ValidDateRange(startField = "createDate", endField = "updateDate")
 public class Document {
 
     @Id
@@ -49,9 +49,10 @@ public class Document {
     @NotNull(message = "Unique number can't be null")
     private UUID uniqueNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "author_id")
+    @NotNull(message = "Author ID can't be null")
+    @Positive(message = "Author ID can't be negative")
+    private Long authorId;
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Name can't be null or blank")
@@ -62,14 +63,17 @@ public class Document {
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @NotNull(message = "Status can't be null")
-    private DocumentStatus documentStatus;
+    private DocumentStatus status;
 
     @Column(name = "create_date", nullable = false)
     @NotNull(message = "Create date can't be null")
-    @PastOrPresent(message = "Create date can't be in future")
+    @CreationTimestamp
     private LocalDateTime createDate;
 
     @Column(name = "update_date")
-    @PastOrPresent(message = "Update date can't be in future")
+    @UpdateTimestamp
     private LocalDateTime updateDate;
+
+    @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
+    private List<History> historyList;
 }

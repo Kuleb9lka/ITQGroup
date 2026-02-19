@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19022026-add-document-column-to-history-and-fk-constraint
+      author: bogdan_lopatenko
+      changes:
+        - addColumn:
+            tableName: history
+            columns:
+              - column:
+                  name: document_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: history
+            baseColumnNames: document_id
+            referencedTableName: documents
+            referencedColumnNames: id
+            constraintName: fk_history_documents
+            onUpdate: RESTRICT
+            onDelete: RESTRICT

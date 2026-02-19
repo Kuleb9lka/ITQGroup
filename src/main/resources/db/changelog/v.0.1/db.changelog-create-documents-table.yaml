@@ -18,7 +18,7 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
-                  name: user_id
+                  name: author_id
                   type: bigint
                   constraints:
                     nullable: false
@@ -42,12 +42,3 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: true
-
-        - addForeignKeyConstraint:
-            baseTableName: documents
-            baseColumnNames: user_id
-            referencedTableName: users
-            referencedColumnNames: id
-            constraintName: fk_documents_users
-            onDelete: RESTRICT
-            onUpdate: RESTRICT

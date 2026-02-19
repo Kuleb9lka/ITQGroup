@@ -1,4 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db.changelog-add-history-fk-constraint.yaml
+      file: db.changelog.add-document-column-to-history-and-fk-constraint.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: db.changelog-create-approval-registry-table.yaml
       relativeToChangelogFile: true

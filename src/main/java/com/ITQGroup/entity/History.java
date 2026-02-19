@@ -13,13 +13,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -40,12 +41,17 @@ public class History {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "document_id", nullable = false)
+    private Document document;
+
+    @Column(name = "author_id")
+    @NotNull(message = "Author ID can't be null")
+    @Positive(message = "Author ID can't be negative")
+    private Long authorId;
 
     @Column(name = "update_date", nullable = false)
     @NotNull(message = "Update date can't be null")
-    @PastOrPresent(message = "Update date can't be in future")
+    @CreationTimestamp
     private LocalDateTime updateDate;
 
     @Column(name = "action", nullable = false)
