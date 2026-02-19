@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
                 componentModel = "spring",
                 injectionStrategy = InjectionStrategy.CONSTRUCTOR,
                 unmappedTargetPolicy = ReportingPolicy.ERROR,
-                uses = {DocumentMapper.class, UserMapper.class}
+                uses = DocumentMapper.class
         )
 public interface ApprovalRegistryMapper {
 }
