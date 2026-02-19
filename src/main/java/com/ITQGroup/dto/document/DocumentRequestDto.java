@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DocumentRequestDto {
 
-    @NotNull(message = "User ID can't be null")
-    @Positive(message = "User ID can't be negative")
-    private Long userId;
+    @NotNull(message = "Author ID can't be null")
+    @Positive(message = "Author ID can't be negative")
+    private Long authorId;
 
     @NotBlank(message = "Name can't be null or blank")
     @Size(min = 5, message = "Minimal document name length 5 symbols")

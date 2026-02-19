@@ -1,7 +1,6 @@
 package com.ITQGroup.dto.document;
 
 import com.ITQGroup.dto.history.HistoryResponseDto;
-import com.ITQGroup.dto.user.UserResponseDto;
 import com.ITQGroup.enums.DocumentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,7 @@ public class DocumentResponseDto {
 
     private UUID uniqueNumber;
 
-    private UserResponseDto user;
+    private Long authorId;
 
     private String name;
 

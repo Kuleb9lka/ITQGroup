@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DocumentUpdateDto {
 
-    @Positive(message = "User ID can't be negative")
-    private Long userId;
+    @Positive(message = "Author ID can't be negative")
+    private Long authorId;
 
     @Size(min = 5, message = "Minimal document name length 5 symbols")
     private String name;
