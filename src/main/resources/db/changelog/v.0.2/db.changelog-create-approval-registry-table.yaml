@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19022026-create-approval-registry
+      author: bogdan_lopatenko
+      changes:
+        - createTable:
+            tableName: approval_registry
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: document_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: approved_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: approved_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: approval_registry
+            baseColumnNames: document_id
+            referencedTableName: documents
+            referencedColumnNames: id
+            constraintName: fk_approval_registry_document
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: approval_registry
+            baseColumnNames: approved_by
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_approval_registry_users
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
