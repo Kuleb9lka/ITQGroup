@@ -1,5 +1,6 @@
 package com.ITQGroup.exception.handler;
 
+import com.ITQGroup.constant.Constant;
 import com.ITQGroup.dto.ExceptionResponseDto;
 import com.ITQGroup.exception.ApprovalRegistryException;
 import com.ITQGroup.exception.DocumentNotFoundException;
@@ -35,5 +36,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDto> handleStatusNotFoundException(StatusNotFoundException exception) {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDto(exception.getResponseStatus(), exception.getMessage()));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ExceptionResponseDto> handleRuntimeException(RuntimeException exception) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDto(Constant.RESPONSE_STATUS_UNKNOWN_ERROR, exception.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponseDto> handleException(Exception exception) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDto(Constant.RESPONSE_STATUS_UNKNOWN_ERROR, exception.getMessage()));
     }
 }
