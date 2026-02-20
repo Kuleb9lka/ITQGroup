@@ -1,5 +1,6 @@
 package com.ITQGroup.controller;
 
+import com.ITQGroup.api.DocumentApi;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.PageResponseDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
@@ -23,7 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/documents")
-public class DocumentController {
+public class DocumentController implements DocumentApi {
 
     private final DocumentService documentService;
 
@@ -63,14 +64,12 @@ public class DocumentController {
     }
 
     @PostMapping("/send-submitted/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmitted(@RequestBody List<Long> ids, @PathVariable Long authorId) {
-
+    public List<DocumentProcessingResultDto> sendToSubmitted(@PathVariable Long authorId, @RequestBody List<Long> ids) {
         return batchDocumentService.sendBatchSubmitted(authorId, ids);
     }
 
     @PostMapping("/send-approval/{authorId}")
-    public List<DocumentProcessingResultDto> sendToApproval(@RequestBody List<Long> ids, @PathVariable Long authorId) {
-
+    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId, @RequestBody List<Long> ids) {
         return batchDocumentService.sendBatchApproved(authorId, ids);
     }
 
