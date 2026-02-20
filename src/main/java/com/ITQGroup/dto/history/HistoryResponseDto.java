@@ -1,6 +1,5 @@
 package com.ITQGroup.dto.history;
 
-import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.enums.Action;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +13,6 @@ import java.time.LocalDateTime;
 public class HistoryResponseDto {
 
     private Long id;
-
-    private DocumentResponseDto document;
 
     private Long authorId;
 

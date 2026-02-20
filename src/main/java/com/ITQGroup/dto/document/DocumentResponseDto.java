@@ -2,6 +2,7 @@ package com.ITQGroup.dto.document;
 
 import com.ITQGroup.dto.history.HistoryResponseDto;
 import com.ITQGroup.enums.DocumentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,10 @@ public class DocumentResponseDto {
 
     private DocumentStatus status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime updateDate;
 
     private List<HistoryResponseDto> historyList;

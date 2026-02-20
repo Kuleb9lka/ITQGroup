@@ -18,7 +18,6 @@ public class DocumentRequestDto {
     private Long authorId;
 
     @NotBlank(message = "Name can't be null or blank")
-    @Size(min = 5, message = "Minimal document name length 5 symbols")
+    @Size(min = 3, message = "Minimal document name length 3 symbols")
     private String name;
-
 }
