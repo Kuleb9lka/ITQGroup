@@ -1,4 +1,4 @@
-package com.ITQGroup.dto;
+package com.ITQGroup.dto.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

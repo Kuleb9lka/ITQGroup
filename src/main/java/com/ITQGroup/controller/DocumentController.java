@@ -1,10 +1,11 @@
 package com.ITQGroup.controller;
 
-import com.ITQGroup.dto.DocumentProcessingResultDto;
+import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.PageResponseDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.filter.DocumentFilterDto;
 import com.ITQGroup.service.BatchDocumentService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
@@ -41,8 +42,13 @@ public class DocumentController {
         return documentService.getByIdWithHistory(id);
     }
 
-
     @PostMapping("/search")
+    public List<DocumentResponseDto> search(@RequestBody DocumentFilterDto filterDto){
+
+        return documentService.search(filterDto);
+    }
+
+    @PostMapping("/filter")
     public PageResponseDto<DocumentResponseDto> getAllByListId(@RequestBody List<Long> documentIds, @Valid DocumentPageableDto pageableSettings) {
 
         Page<DocumentResponseDto> page = batchDocumentService.getByListIds(documentIds, pageableSettings);

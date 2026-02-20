@@ -6,6 +6,8 @@ import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateDto;
+import com.ITQGroup.dto.filter.DocumentFilterDto;
+import com.ITQGroup.dto.specification.DocumentSpecification;
 import com.ITQGroup.entity.ApprovalRegistry;
 import com.ITQGroup.entity.Document;
 import com.ITQGroup.entity.History;
@@ -27,6 +29,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +69,16 @@ public class DocumentServiceImpl implements DocumentService {
                 new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, Constant.RESPONSE_STATUS_NOT_FOUND));
 
         return documentMapper.toResponseDto(document);
+    }
+
+    @Override
+    public List<DocumentResponseDto> search(DocumentFilterDto documentFilterDto) {
+
+        Specification<Document> documentSpecification = DocumentSpecification.withFilters(documentFilterDto);
+
+        List<Document> documentsWithSpecification = documentRepository.findAll(documentSpecification);
+
+        return documentMapper.toResponseList(documentsWithSpecification);
     }
 
     @Override

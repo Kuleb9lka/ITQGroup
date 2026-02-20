@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper
         (
                 componentModel = "spring",
@@ -39,4 +41,6 @@ public interface DocumentMapper {
         @Mapping(target = "updateDate", ignore = true)
         @Mapping(target = "historyList", ignore = true)
         void updateFromDb(DocumentUpdateDto dto, @MappingTarget Document document);
+
+        List<DocumentResponseDto> toResponseList(List<Document> documentList);
 }

@@ -1,7 +1,7 @@
 package com.ITQGroup.service.impl;
 
 import com.ITQGroup.constant.Constant;
-import com.ITQGroup.dto.DocumentProcessingResultDto;
+import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateDto;

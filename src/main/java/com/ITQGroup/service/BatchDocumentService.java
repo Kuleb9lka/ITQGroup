@@ -1,6 +1,6 @@
 package com.ITQGroup.service;
 
-import com.ITQGroup.dto.DocumentProcessingResultDto;
+import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import org.springframework.data.domain.Page;
