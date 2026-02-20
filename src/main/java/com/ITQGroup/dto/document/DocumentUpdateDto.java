@@ -14,5 +14,7 @@ public class DocumentUpdateDto {
     @Positive(message = "Author ID can't be negative")
     private Long authorId;
 
-    private DocumentStatus status;
+    private DocumentStatus oldStatus;
+
+    private DocumentStatus newStatus;
 }

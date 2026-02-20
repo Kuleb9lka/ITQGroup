@@ -5,6 +5,7 @@ import com.ITQGroup.entity.History;
 import com.ITQGroup.enums.Action;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper
@@ -16,7 +17,8 @@ import org.mapstruct.ReportingPolicy;
         )
 public interface HistoryMapper {
 
+        @Mapping(target = "id", ignore = true)
+        @Mapping(target = "comment", ignore = true)
+        @Mapping(target = "document", source = "document")
         History construct(Document document, Long authorId, Action action);
-        History construct(Document document, Long authorId, Action action, String comment);
-
 }
