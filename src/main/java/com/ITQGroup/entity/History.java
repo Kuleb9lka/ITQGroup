@@ -20,7 +20,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -51,7 +50,6 @@ public class History {
 
     @Column(name = "update_date", nullable = false)
     @NotNull(message = "Update date can't be null")
-    @CreationTimestamp
     private LocalDateTime updateDate;
 
     @Column(name = "action", nullable = false)
