@@ -59,10 +59,12 @@ public class BatchDocumentServiceImpl implements BatchDocumentService {
             } catch (DocumentProcessingException e) {
 
                 responseDtoList.add(documentMapper.constructResultDto(id, e.getResponseStatus(), e.getMessage()));
+                continue;
 
             } catch (OptimisticLockException e) {
 
                 responseDtoList.add(documentMapper.constructResultDto(id, ResponseStatus.CONFLICT.name(), ExceptionConstant.FAILED_UPDATE_DOCUMENT));
+                continue;
 
             } catch (Exception e) {
 
