@@ -1,6 +1,7 @@
 package com.ITQGroup.entity;
 
 import com.ITQGroup.enums.DocumentStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -71,6 +73,9 @@ public class Document {
     @PastOrPresent(message = "Update date can't be in future")
     private LocalDateTime updateDate;
 
-    @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = {})
+    @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<History> historyList;
+
+    @Version
+    private Long version;
 }
