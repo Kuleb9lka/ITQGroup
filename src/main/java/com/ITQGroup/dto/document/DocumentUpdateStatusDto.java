@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentUpdateDto {
+public class DocumentUpdateStatusDto {
 
     @Positive(message = "Author ID can't be negative")
     private Long authorId;

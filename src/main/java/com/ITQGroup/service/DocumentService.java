@@ -3,7 +3,7 @@ package com.ITQGroup.service;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
-import com.ITQGroup.dto.document.DocumentUpdateDto;
+import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
 import org.springframework.data.domain.Page;
 
@@ -20,5 +20,5 @@ public interface DocumentService {
 
     DocumentResponseDto create(DocumentRequestDto dto);
 
-    void update(Long documentId, DocumentUpdateDto dto);
+    void updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto);
 }

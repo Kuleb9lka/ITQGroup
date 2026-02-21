@@ -20,7 +20,7 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<mapstruct.binding.version>0.2.0</mapstruct.binding.version>
 		<mapstruct.processor.version>1.5.5.Final</mapstruct.processor.version>
-		<springdoc.version>2.6.0</springdoc.version>
+		<springdoc.version>2.7.0</springdoc.version>
 	</properties>
 
 	<dependencies>

@@ -1,8 +1,9 @@
 package com.ITQGroup.mapper;
 
+import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
-import com.ITQGroup.dto.document.DocumentUpdateDto;
+import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.entity.Document;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -30,6 +31,7 @@ public interface DocumentMapper {
         @Mapping(target = "createDate", ignore = true)
         @Mapping(target = "updateDate", ignore = true)
         @Mapping(target = "historyList", ignore = true)
+        @Mapping(target = "version", ignore = true)
         Document toEntityFromRequestDto(DocumentRequestDto dto);
 
 
@@ -40,7 +42,10 @@ public interface DocumentMapper {
         @Mapping(target = "createDate", ignore = true)
         @Mapping(target = "updateDate", ignore = true)
         @Mapping(target = "historyList", ignore = true)
-        void updateFromDb(DocumentUpdateDto dto, @MappingTarget Document document);
+        @Mapping(target = "version", ignore = true)
+        void updateFromDb(DocumentUpdateStatusDto dto, @MappingTarget Document document);
 
         List<DocumentResponseDto> toResponseList(List<Document> documentList);
+
+        DocumentProcessingResultDto constructResultDto(Long documentId, String status, String responseMessage);
 }

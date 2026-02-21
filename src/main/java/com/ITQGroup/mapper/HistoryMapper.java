@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.time.LocalDateTime;
+
 @Mapper
         (
                 componentModel = "spring",
@@ -20,5 +22,5 @@ public interface HistoryMapper {
         @Mapping(target = "id", ignore = true)
         @Mapping(target = "comment", ignore = true)
         @Mapping(target = "document", source = "document")
-        History construct(Document document, Long authorId, Action action);
+        History construct(Document document, Long authorId, Action action, LocalDateTime updateDate);
 }

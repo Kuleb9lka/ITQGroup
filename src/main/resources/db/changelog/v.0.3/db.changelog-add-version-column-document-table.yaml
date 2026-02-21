@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20022026-add-version-column-document-table
+      author: bogdan_lopatenko
+      changes:
+        - addColumn:
+            tableName: documents
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValue: 0
+                  constraints:
+                    nullable: false

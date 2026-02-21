@@ -10,6 +10,8 @@ public final class ExceptionConstant {
 
     public static final String FAILED_WRITE_DOCUMENT_REGISTRY = "Failed to write document to Approval Registry: ";
 
+    public static final String FAILED_UPDATE_DOCUMENT= "Document was updated by another process.";
+
 
 
 

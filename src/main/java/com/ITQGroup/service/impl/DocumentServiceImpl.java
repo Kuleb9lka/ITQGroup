@@ -5,12 +5,13 @@ import com.ITQGroup.constant.ExceptionConstant;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
-import com.ITQGroup.dto.document.DocumentUpdateDto;
+import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
 import com.ITQGroup.dto.specification.DocumentSpecification;
 import com.ITQGroup.entity.ApprovalRegistry;
 import com.ITQGroup.entity.Document;
 import com.ITQGroup.entity.History;
+import com.ITQGroup.entity.ResponseStatus;
 import com.ITQGroup.enums.Action;
 import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.exception.ApprovalRegistryException;
@@ -22,7 +23,6 @@ import com.ITQGroup.mapper.DocumentMapper;
 import com.ITQGroup.mapper.HistoryMapper;
 import com.ITQGroup.reposiroty.ApprovalRegistryRepository;
 import com.ITQGroup.reposiroty.DocumentRepository;
-import com.ITQGroup.reposiroty.HistoryRepository;
 import com.ITQGroup.service.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,8 +45,6 @@ public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentMapper documentMapper;
 
-    private final HistoryRepository historyRepository;
-
     private final HistoryMapper historyMapper;
 
     private final ApprovalRegistryRepository registryRepository;
@@ -66,7 +64,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponseDto getByIdWithHistory(Long id) {
 
         Document document = documentRepository.findByIdWithHistory(id).orElseThrow(() ->
-                new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, Constant.RESPONSE_STATUS_NOT_FOUND));
+                new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, ResponseStatus.NOT_FOUND.name()));
 
         return documentMapper.toResponseDto(document);
     }
@@ -109,7 +107,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional
-    public void update(Long documentId, DocumentUpdateDto dto) {
+    public void updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) {
 
         Long authorId = dto.getAuthorId();
 
@@ -126,46 +124,41 @@ public class DocumentServiceImpl implements DocumentService {
         Action actionByStatus = getActionByStatus(dto.getOldStatus());
 
         History constructedHistory =
-                historyMapper.construct(documentById, authorId, actionByStatus);
+                historyMapper.construct(documentById, authorId, actionByStatus, LocalDateTime.now());
 
-        History savedHistory = saveHistory(constructedHistory);
+        documentById.getHistoryList().add(constructedHistory);
 
         if (documentById.getStatus().equals(DocumentStatus.APPROVED)) {
             try {
                 ApprovalRegistry constructedRegistry =
-                        registryMapper.construct(documentById, authorId, savedHistory.getUpdateDate());
+                        registryMapper.construct(documentById, authorId, constructedHistory.getUpdateDate());
 
                 registryRepository.save(constructedRegistry);
-            } catch (Exception e){
+            } catch (Exception e) {
 
-                throw new ApprovalRegistryException(ExceptionConstant.FAILED_WRITE_DOCUMENT_REGISTRY + documentById.getId(), Constant.RESPONSE_STATUS_APPROVAL_REGISTRY_ERROR);
+                throw new ApprovalRegistryException(ExceptionConstant.FAILED_WRITE_DOCUMENT_REGISTRY + documentById.getId(), ResponseStatus.APPROVAL_REGISTRY_ERROR.name());
             }
         }
     }
 
 
-    private History saveHistory(History history){
-
-        return historyRepository.save(history);
-    }
-
     private Document getDocumentById(Long id) {
 
         return documentRepository.findById(id).orElseThrow(() ->
-                new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, Constant.RESPONSE_STATUS_NOT_FOUND));
+                new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, ResponseStatus.NOT_FOUND.name()));
     }
 
     private Action getActionByStatus(DocumentStatus status) {
 
         if (!Constant.DOCUMENT_ACTIONS_MAP.containsKey(status)) {
 
-            throw new StatusNotFoundException(ExceptionConstant.STATUS_NOT_FOUND + status, Constant.RESPONSE_STATUS_NOT_FOUND);
+            throw new StatusNotFoundException(ExceptionConstant.STATUS_NOT_FOUND + status, ResponseStatus.NOT_FOUND.name());
         }
 
         return Constant.DOCUMENT_ACTIONS_MAP.get(status);
     }
 
-    private Pageable constructPageable(DocumentPageableDto dto){
+    private Pageable constructPageable(DocumentPageableDto dto) {
 
         Sort sort = dto.getAsc() ?
                 Sort.by(dto.getSortBy()).ascending() :
@@ -174,11 +167,11 @@ public class DocumentServiceImpl implements DocumentService {
         return PageRequest.of(dto.getPage(), dto.getSize(), sort);
     }
 
-    private void checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus){
+    private void checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) {
 
-        if (!currentDocStatus.equals(oldStatus)){
+        if (!currentDocStatus.equals(oldStatus)) {
 
-            throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, Constant.RESPONSE_STATUS_CONFLICT);
+            throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, ResponseStatus.CONFLICT.name());
         }
     }
 }

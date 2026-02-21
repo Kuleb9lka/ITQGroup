@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: db.changelog-add-version-column-document-table.yaml
+      relativeToChangelogFile: true
