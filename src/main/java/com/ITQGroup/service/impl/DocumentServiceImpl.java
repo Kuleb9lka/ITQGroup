@@ -61,6 +61,15 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public List<DocumentResponseDto> getByStatusLimited(DocumentStatus status, Integer limit) {
+
+        Pageable limited = PageRequest.of(0, limit);
+        List<Document> documentsByStatusAndLimit = documentRepository.findByStatusLimited(status, limited);
+
+        return documentMapper.toResponseList(documentsByStatusAndLimit);
+    }
+
+    @Override
     public DocumentResponseDto getByIdWithHistory(Long id) {
 
         Document document = documentRepository.findByIdWithHistory(id).orElseThrow(() ->

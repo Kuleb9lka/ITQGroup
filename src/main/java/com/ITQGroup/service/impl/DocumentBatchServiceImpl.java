@@ -5,11 +5,11 @@ import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
-import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.enums.DocumentStatus;
+import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.exception.DocumentProcessingException;
 import com.ITQGroup.mapper.DocumentMapper;
-import com.ITQGroup.service.BatchDocumentService;
+import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BatchDocumentServiceImpl implements BatchDocumentService {
+public class DocumentBatchServiceImpl implements DocumentBatchService {
 
     private final DocumentService documentService;
 

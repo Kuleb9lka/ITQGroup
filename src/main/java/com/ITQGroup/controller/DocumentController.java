@@ -7,7 +7,7 @@ import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
-import com.ITQGroup.service.BatchDocumentService;
+import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class DocumentController implements DocumentApi {
 
     private final DocumentService documentService;
 
-    private final BatchDocumentService batchDocumentService;
+    private final DocumentBatchService documentBatchService;
 
 
     @PostMapping("/create")
@@ -52,7 +52,7 @@ public class DocumentController implements DocumentApi {
     @PostMapping("/filter")
     public PageResponseDto<DocumentResponseDto> getAllByListId(@RequestBody List<Long> documentIds, @Valid DocumentPageableDto pageableSettings) {
 
-        Page<DocumentResponseDto> page = batchDocumentService.getByListIds(documentIds, pageableSettings);
+        Page<DocumentResponseDto> page = documentBatchService.getByListIds(documentIds, pageableSettings);
 
         return new PageResponseDto<>(
                 page.getContent(),
@@ -65,12 +65,12 @@ public class DocumentController implements DocumentApi {
 
     @PostMapping("/send-submitted/{authorId}")
     public List<DocumentProcessingResultDto> sendToSubmitted(@PathVariable Long authorId, @RequestBody List<Long> ids) {
-        return batchDocumentService.sendBatchSubmitted(authorId, ids);
+        return documentBatchService.sendBatchSubmitted(authorId, ids);
     }
 
     @PostMapping("/send-approval/{authorId}")
     public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId, @RequestBody List<Long> ids) {
-        return batchDocumentService.sendBatchApproved(authorId, ids);
+        return documentBatchService.sendBatchApproved(authorId, ids);
     }
 
 
