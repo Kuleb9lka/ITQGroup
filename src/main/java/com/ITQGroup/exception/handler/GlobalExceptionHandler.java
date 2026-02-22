@@ -1,7 +1,7 @@
 package com.ITQGroup.exception.handler;
 
 import com.ITQGroup.dto.ExceptionResponseDto;
-import com.ITQGroup.entity.ResponseStatus;
+import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.exception.ApprovalRegistryException;
 import com.ITQGroup.exception.DocumentNotFoundException;
 import com.ITQGroup.exception.DocumentStatusConflictException;

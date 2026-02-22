@@ -11,7 +11,7 @@ import com.ITQGroup.dto.specification.DocumentSpecification;
 import com.ITQGroup.entity.ApprovalRegistry;
 import com.ITQGroup.entity.Document;
 import com.ITQGroup.entity.History;
-import com.ITQGroup.entity.ResponseStatus;
+import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.enums.Action;
 import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.exception.ApprovalRegistryException;
