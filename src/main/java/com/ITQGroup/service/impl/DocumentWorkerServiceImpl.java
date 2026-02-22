@@ -1,6 +1,6 @@
 package com.ITQGroup.service.impl;
 
-import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
@@ -19,13 +19,33 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService {
     private final DocumentService documentService;
 
     @Override
-    public void processByStatus(DocumentStatus status, Integer docsLimit) {
+    public void processSubmission(Integer docsLimit) {
 
-        List<DocumentResponseDto> byStatusLimited = documentService.getByStatusLimited(status, docsLimit);
+        List<DocumentShortResponseDto> docsByStatusAndLimit = getDocsByStatusAndLimit(DocumentStatus.DRAFT, docsLimit);
 
-        List<Long> documentsIds = byStatusLimited.stream()
-                .map(DocumentResponseDto::getId).toList();
+        List<Long> documentIds = extractDocsIds(docsByStatusAndLimit);
 
-        documentBatchService.sendBatchApproved(0L, documentsIds);
+        documentBatchService.sendBatchSubmitted(1L, documentIds);
+    }
+
+    @Override
+    public void processApproval(Integer docsLimit) {
+
+        List<DocumentShortResponseDto> docsByStatusAndLimit = getDocsByStatusAndLimit(DocumentStatus.SUBMITTED, docsLimit);
+
+        List<Long> documentIds = extractDocsIds(docsByStatusAndLimit);
+
+        documentBatchService.sendBatchApproved(1L, documentIds);
+    }
+
+    private List<DocumentShortResponseDto> getDocsByStatusAndLimit(DocumentStatus status, Integer limit){
+
+        return documentService.getByStatusLimited(status, limit);
+    }
+
+    private List<Long> extractDocsIds(List<DocumentShortResponseDto> list){
+
+        return list.stream()
+                .map(DocumentShortResponseDto::getId).toList();
     }
 }

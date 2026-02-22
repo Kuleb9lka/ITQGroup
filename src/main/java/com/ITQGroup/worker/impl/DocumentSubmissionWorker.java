@@ -1,6 +1,5 @@
 package com.ITQGroup.worker.impl;
 
-import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.service.DocumentWorkerService;
 import com.ITQGroup.worker.DocumentWorker;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +12,13 @@ public class DocumentSubmissionWorker implements DocumentWorker {
 
     private final DocumentWorkerService documentWorkerService;
 
-
-    @Value("${worker.submit.batch-size}")
+    @Value("${worker.submission.batch-size}")
     private Integer documentsBatchSize;
 
 
     @Override
     public void work() {
 
-        documentWorkerService.processByStatus(DocumentStatus.DRAFT, documentsBatchSize);
+        documentWorkerService.processSubmission(documentsBatchSize);
     }
 }

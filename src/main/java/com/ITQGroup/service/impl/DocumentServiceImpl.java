@@ -5,6 +5,7 @@ import com.ITQGroup.constant.ExceptionConstant;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
 import com.ITQGroup.dto.specification.DocumentSpecification;
@@ -61,12 +62,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<DocumentResponseDto> getByStatusLimited(DocumentStatus status, Integer limit) {
+    public List<DocumentShortResponseDto> getByStatusLimited(DocumentStatus status, Integer limit) {
 
         Pageable limited = PageRequest.of(0, limit);
         List<Document> documentsByStatusAndLimit = documentRepository.findByStatusLimited(status, limited);
 
-        return documentMapper.toResponseList(documentsByStatusAndLimit);
+        return documentMapper.toShortResponseList(documentsByStatusAndLimit);
     }
 
     @Override
@@ -136,6 +137,8 @@ public class DocumentServiceImpl implements DocumentService {
                 historyMapper.construct(documentById, authorId, actionByStatus, LocalDateTime.now());
 
         documentById.getHistoryList().add(constructedHistory);
+
+        documentRepository.save(documentById);
 
         if (documentById.getStatus().equals(DocumentStatus.APPROVED)) {
             try {

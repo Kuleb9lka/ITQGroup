@@ -3,6 +3,7 @@ package com.ITQGroup.service;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
 import com.ITQGroup.enums.DocumentStatus;
@@ -14,7 +15,7 @@ public interface DocumentService {
 
     DocumentResponseDto getById(Long id);
 
-    List<DocumentResponseDto> getByStatusLimited(DocumentStatus status, Integer limit);
+    List<DocumentShortResponseDto> getByStatusLimited(DocumentStatus status, Integer limit);
     DocumentResponseDto getByIdWithHistory(Long id);
 
     List<DocumentResponseDto> search(DocumentFilterDto documentFilterDto);

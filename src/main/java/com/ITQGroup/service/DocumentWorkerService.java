@@ -1,8 +1,8 @@
 package com.ITQGroup.service;
 
-import com.ITQGroup.enums.DocumentStatus;
-
 public interface DocumentWorkerService {
 
-    void processByStatus(DocumentStatus status, Integer docsLimit);
+    void processSubmission(Integer docsLimit);
+
+    void processApproval(Integer docsLimit);
 }

@@ -18,9 +18,11 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
 worker:
-  submit:
+  submission:
     batch-size: ${SUBMIT_WORKER_BATCH_SIZE:5}
     enabled: true
-  approve:
+    cron-expression: ${SUBMISSION_WORKER_CRON_EXPRESSION:*/30 * * * * *}
+  approval:
     batch-size: ${APPROVE_WORKER_BATCH_SIZE:5}
     enabled: true
+    cron-expression: ${APPROVAL_WORKER_CRON_EXPRESSION:*/30 * * * * *}
