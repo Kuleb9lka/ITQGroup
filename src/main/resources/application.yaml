@@ -17,3 +17,10 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
+worker:
+  submit:
+    batch-size: ${SUBMIT_WORKER_BATCH_SIZE:5}
+    enabled: true
+  approve:
+    batch-size: ${APPROVE_WORKER_BATCH_SIZE:5}
+    enabled: true
