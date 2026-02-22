@@ -1,6 +1,7 @@
 package com.ITQGroup.reposiroty;
 
 import com.ITQGroup.entity.Document;
+import com.ITQGroup.enums.DocumentStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
     Optional<Document> findByIdWithHistory(@Param("id") Long id);
 
     Page<Document> findAllByIdIn(List<Long> ids, Pageable pageable);
+
+    @Query("select doc from Document doc where doc.status = :status")
+    List<Document> findByStatusLimited(@Param("status") DocumentStatus status, Pageable limit);
+
 }

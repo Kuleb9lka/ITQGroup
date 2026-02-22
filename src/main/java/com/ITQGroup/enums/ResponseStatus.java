@@ -1,4 +1,4 @@
-package com.ITQGroup.entity;
+package com.ITQGroup.enums;
 
 public enum ResponseStatus {
 

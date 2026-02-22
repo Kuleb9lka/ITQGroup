@@ -3,6 +3,7 @@ package com.ITQGroup.mapper;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.document.DocumentUpdateStatusDto;
 import com.ITQGroup.entity.Document;
 import org.mapstruct.InjectionStrategy;
@@ -23,6 +24,8 @@ import java.util.List;
 public interface DocumentMapper {
 
         DocumentResponseDto toResponseDto(Document document);
+
+        DocumentShortResponseDto toShortResponseDto(Document document);
 
 
         @Mapping(target = "id", ignore = true)
@@ -46,6 +49,8 @@ public interface DocumentMapper {
         void updateFromDb(DocumentUpdateStatusDto dto, @MappingTarget Document document);
 
         List<DocumentResponseDto> toResponseList(List<Document> documentList);
+
+        List<DocumentShortResponseDto> toShortResponseList(List<Document> documentList);
 
         DocumentProcessingResultDto constructResultDto(Long documentId, String status, String responseMessage);
 }
