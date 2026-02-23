@@ -101,13 +101,13 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional
-    public List<DocumentResponseDto> batchCreate(List<DocumentRequestDto> list) {
+    public List<DocumentShortResponseDto> batchCreate(List<DocumentRequestDto> list) {
 
         List<Document> documents = constructAndMapBatch(list);
 
         List<Document> savedDocuments = documentRepository.saveAll(documents);
 
-        return documentMapper.toResponseList(savedDocuments);
+        return documentMapper.toShortResponseList(savedDocuments);
     }
 
 

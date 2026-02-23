@@ -58,4 +58,7 @@ public interface DocumentMapper {
         DocumentProcessingResultDto constructResultDto(Long documentId, String status, String responseMessage);
 
         void fillAdditionalInfo(@MappingTarget Document document, UUID uniqueNumber, DocumentStatus status, LocalDateTime createDate);
+
+
+
 }

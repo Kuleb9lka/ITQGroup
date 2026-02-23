@@ -22,7 +22,7 @@ public interface DocumentService {
 
     Page<DocumentResponseDto> getAllByIds(List<Long> ids, DocumentPageableDto dto);
 
-    List<DocumentResponseDto> batchCreate(List<DocumentRequestDto> list);
+    List<DocumentShortResponseDto> batchCreate(List<DocumentRequestDto> list);
 
     DocumentResponseDto create(DocumentRequestDto dto);
 
