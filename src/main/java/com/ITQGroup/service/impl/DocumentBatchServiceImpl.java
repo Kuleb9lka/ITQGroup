@@ -31,7 +31,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public Page<DocumentResponseDto> getByListIds(List<Long> ids, DocumentPageableDto pageDto) {
 
-        return documentService.findAllByIds(ids, pageDto);
+        return documentService.getAllByIds(ids, pageDto);
     }
 
     @Override

@@ -12,9 +12,9 @@ import com.ITQGroup.dto.specification.DocumentSpecification;
 import com.ITQGroup.entity.ApprovalRegistry;
 import com.ITQGroup.entity.Document;
 import com.ITQGroup.entity.History;
-import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.enums.Action;
 import com.ITQGroup.enums.DocumentStatus;
+import com.ITQGroup.enums.ResponseStatus;
 import com.ITQGroup.exception.ApprovalRegistryException;
 import com.ITQGroup.exception.DocumentNotFoundException;
 import com.ITQGroup.exception.DocumentStatusConflictException;
@@ -90,13 +90,24 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Page<DocumentResponseDto> findAllByIds(List<Long> ids, DocumentPageableDto dto) {
+    public Page<DocumentResponseDto> getAllByIds(List<Long> ids, DocumentPageableDto dto) {
 
         Pageable pageable = constructPageable(dto);
 
         Page<Document> allByIds = documentRepository.findAllByIdIn(ids, pageable);
 
         return allByIds.map(documentMapper::toResponseDto);
+    }
+
+    @Override
+    @Transactional
+    public List<DocumentResponseDto> batchCreate(List<DocumentRequestDto> list) {
+
+        List<Document> documents = constructAndMapBatch(list);
+
+        List<Document> savedDocuments = documentRepository.saveAll(documents);
+
+        return documentMapper.toResponseList(savedDocuments);
     }
 
 
@@ -106,9 +117,7 @@ public class DocumentServiceImpl implements DocumentService {
         Document document =
                 documentMapper.toEntityFromRequestDto(dto);
 
-        document.setCreateDate(LocalDateTime.now());
-        document.setUniqueNumber(UUID.randomUUID());
-        document.setStatus(DocumentStatus.DRAFT);
+        documentMapper.fillAdditionalInfo(document, UUID.randomUUID(), DocumentStatus.DRAFT, LocalDateTime.now());
 
         Document savedDocument = documentRepository.save(document);
 
@@ -151,6 +160,20 @@ public class DocumentServiceImpl implements DocumentService {
                 throw new ApprovalRegistryException(ExceptionConstant.FAILED_WRITE_DOCUMENT_REGISTRY + documentById.getId(), ResponseStatus.APPROVAL_REGISTRY_ERROR.name());
             }
         }
+    }
+
+    private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos){
+
+        return requestDtos.stream()
+                .map(dto -> {
+
+                    Document document = documentMapper.toEntityFromRequestDto(dto);
+
+                    documentMapper.fillAdditionalInfo(document, UUID.randomUUID(), DocumentStatus.DRAFT, LocalDateTime.now());
+
+                    return document;
+                })
+                .toList();
     }
 
 
