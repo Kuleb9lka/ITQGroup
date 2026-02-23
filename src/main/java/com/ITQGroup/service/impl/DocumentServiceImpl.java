@@ -136,6 +136,8 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public void updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) {
 
+        log.info("Entering  updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
+
         Long authorId = dto.getAuthorId();
 
         Document documentById = getDocumentById(documentId);
@@ -155,19 +157,34 @@ public class DocumentServiceImpl implements DocumentService {
 
         documentById.getHistoryList().add(constructedHistory);
 
+        log.info("Trying to save updated document with history. Document ID: {}, author ID: {}", documentById, authorId);
+
         documentRepository.save(documentById);
 
+        log.info("Document with ID {} was successfully updated", documentById);
+
         if (documentById.getStatus().equals(DocumentStatus.APPROVED)) {
+
+            log.info("Trying to save approved document to Approval Registry");
+
             try {
                 ApprovalRegistry constructedRegistry =
                         registryMapper.construct(documentById, authorId, constructedHistory.getUpdateDate());
 
+                log.info("Trying to save approval registry entity with document ID: {}, author ID: {}", documentById, authorId);
+
                 registryRepository.save(constructedRegistry);
+
+                log.info("Approval registry entity was successfully saved");
             } catch (Exception e) {
+
+                log.error("Error while trying to save approval registry entity");
 
                 throw new ApprovalRegistryException(ExceptionConstant.FAILED_WRITE_DOCUMENT_REGISTRY + documentById.getId(), ResponseStatus.APPROVAL_REGISTRY_ERROR.name());
             }
         }
+
+        log.info("Exit updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
     }
 
     private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos){
@@ -193,16 +210,29 @@ public class DocumentServiceImpl implements DocumentService {
 
     private Document getDocumentById(Long id) {
 
-        return documentRepository.findById(id).orElseThrow(() ->
+        log.info("Entering getDocumentById(Long id) method");
+
+        Document document = documentRepository.findById(id).orElseThrow(() ->
                 new DocumentNotFoundException(ExceptionConstant.DOCUMENT_NOT_FOUND_BY_ID + id, ResponseStatus.NOT_FOUND.name()));
+
+        log.info("Document by ID {} successfully got", id);
+
+        log.info("Exit getDocumentById(Long id) method");
+        return document;
     }
 
     private Action getActionByStatus(DocumentStatus status) {
 
+        log.info("Entering etActionByStatus(DocumentStatus status) method");
+
         if (!Constant.DOCUMENT_ACTIONS_MAP.containsKey(status)) {
+
+            log.error("Document status not found {}", status);
 
             throw new StatusNotFoundException(ExceptionConstant.STATUS_NOT_FOUND + status, ResponseStatus.NOT_FOUND.name());
         }
+
+        log.info("Exit etActionByStatus(DocumentStatus status) method");
 
         return Constant.DOCUMENT_ACTIONS_MAP.get(status);
     }
@@ -218,9 +248,15 @@ public class DocumentServiceImpl implements DocumentService {
 
     private void checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) {
 
+        log.info("Entering checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
+
         if (!currentDocStatus.equals(oldStatus)) {
+
+            log.error("Document has already status {}", currentDocStatus);
 
             throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, ResponseStatus.CONFLICT.name());
         }
+
+        log.info("Exit checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
     }
 }

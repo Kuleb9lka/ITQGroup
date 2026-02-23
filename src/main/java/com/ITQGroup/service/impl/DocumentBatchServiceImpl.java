@@ -66,36 +66,66 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public List<DocumentProcessingResultDto> sendBatchSubmitted(Long authorId, List<Long> docsIds) {
 
-        return processDocuments(authorId, docsIds, DocumentStatus.DRAFT, DocumentStatus.SUBMITTED);
+        log.info("Entering sendBatchSubmitted(Long authorId, List<Long> docsIds) method");
+
+        log.info("{} documents submitted to consideration", docsIds.size());
+
+        List<DocumentProcessingResultDto> documentProcessingResultDtos = processDocuments(authorId, docsIds, DocumentStatus.DRAFT, DocumentStatus.SUBMITTED);
+
+        log.info("Exit sendBatchSubmitted(Long authorId, List<Long> docsIds) method");
+
+        return documentProcessingResultDtos;
     }
 
     @Override
     public List<DocumentProcessingResultDto> sendBatchApproved(Long authorId, List<Long> docsIds) {
 
-        return processDocuments(authorId, docsIds, DocumentStatus.SUBMITTED, DocumentStatus.APPROVED);
+        log.info("Entering sendBatchApproved(Long authorId ...) method");
+
+        List<DocumentProcessingResultDto> documentProcessingResultDtos = processDocuments(authorId, docsIds, DocumentStatus.SUBMITTED, DocumentStatus.APPROVED);
+
+        log.info("Exit sendBatchApproved(Long authorId ...) method");
+
+        return documentProcessingResultDtos;
     }
 
     private List<DocumentProcessingResultDto> processDocuments(Long authorId, List<Long> ids, DocumentStatus currentStatus, DocumentStatus newStatus) {
 
+        log.info("Entering processDocuments(Long authorId ...) method");
+
         List<DocumentProcessingResultDto> responseDtoList = new ArrayList<>();
 
-        for (Long id : ids) {
+        for (int i = 0; i < ids.size(); i++) {
+
+            Long id = ids.get(i);
 
             try {
 
+                log.info("Trying to update document status by ID: {}", id);
+
                 documentService.updateDocumentStatus(id, new DocumentUpdateStatusDto(authorId, currentStatus, newStatus));
 
+                log.info("Document by ID {} was successfully updated and have status: {}",
+                        id, newStatus);
+
             } catch (DocumentProcessingException e) {
+
+                log.error("Failed to process document with ID: {}, status: {}, message: {}",
+                        id, e.getResponseStatus(), e.getMessage(), e);
 
                 responseDtoList.add(documentMapper.constructResultDto(id, e.getResponseStatus(), e.getMessage()));
                 continue;
 
             } catch (OptimisticLockException e) {
 
+                log.error("Failed to update document ID: {}, due the optimistic lock. Message; {}", id, e.getMessage());
+
                 responseDtoList.add(documentMapper.constructResultDto(id, ResponseStatus.CONFLICT.name(), ExceptionConstant.FAILED_UPDATE_DOCUMENT));
                 continue;
 
             } catch (Exception e) {
+
+                log.error("Unexpected exception due the processing document with ID: {}, message: {}", id, e.getMessage());
 
                 responseDtoList.add(documentMapper.constructResultDto(id, ResponseStatus.UNKNOWN_ERROR.name(), ""));
                 continue;
@@ -103,6 +133,8 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
             responseDtoList.add(documentMapper.constructResultDto(id, ResponseStatus.SUCCESS.name(), ""));
         }
+
+        log.info("Exit processDocuments(Long authorId ...) method");
 
         return responseDtoList;
 

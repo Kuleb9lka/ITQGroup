@@ -14,6 +14,7 @@ import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/documents")
+@Slf4j
 public class DocumentController implements DocumentApi {
 
     private final DocumentService documentService;
@@ -42,7 +44,11 @@ public class DocumentController implements DocumentApi {
 
     @PostMapping("/batch-create")
     public List<DocumentShortResponseDto> batchCreate(@RequestBody DocumentBatchCreateRequestDto dto){
-        return documentBatchService.batchCreate(dto);
+
+        log.info("Entering batchCreate(DocumentBatchCreateRequestDto dto) controller method");
+        List<DocumentShortResponseDto> documentShortResponseDtos = documentBatchService.batchCreate(dto);
+        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) controller method");
+        return documentShortResponseDtos;
     }
 
     @GetMapping("/{id}")
@@ -73,12 +79,26 @@ public class DocumentController implements DocumentApi {
 
     @PostMapping("/send-submitted/{authorId}")
     public List<DocumentProcessingResultDto> sendToSubmitted(@PathVariable Long authorId, @RequestBody List<Long> ids) {
-        return documentBatchService.sendBatchSubmitted(authorId, ids);
+
+        log.info("Entering sendToSubmitted(Long authorId, List<Long> ids) controller method");
+
+        List<DocumentProcessingResultDto> documentProcessingResultDtos = documentBatchService.sendBatchSubmitted(authorId, ids);
+
+        log.info("Exit sendToSubmitted(Long authorId, List<Long> ids) controller method");
+
+        return documentProcessingResultDtos;
     }
 
     @PostMapping("/send-approval/{authorId}")
     public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId, @RequestBody List<Long> ids) {
-        return documentBatchService.sendBatchApproved(authorId, ids);
+
+        log.info("Entering sendToApproval(Long authorId, List<Long> ids) controller method");
+
+        List<DocumentProcessingResultDto> documentProcessingResultDtos = documentBatchService.sendBatchApproved(authorId, ids);
+
+        log.info("Exit sendToApproval(Long authorId, List<Long> ids) controller method");
+
+        return documentProcessingResultDtos;
     }
 
 
