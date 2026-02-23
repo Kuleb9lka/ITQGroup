@@ -108,6 +108,8 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
                 log.info("Document by ID {} was successfully updated and have status: {}",
                         id, newStatus);
 
+                log.info("{} of {} documents are ready", i + 1, ids.size());
+
             } catch (DocumentProcessingException e) {
 
                 log.error("Failed to process document with ID: {}, status: {}, message: {}",
