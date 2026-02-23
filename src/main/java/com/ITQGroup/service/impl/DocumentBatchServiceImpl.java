@@ -17,6 +17,7 @@ import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DocumentBatchServiceImpl implements DocumentBatchService {
 
     private final DocumentService documentService;
@@ -41,14 +43,24 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public List<DocumentShortResponseDto> batchCreate(DocumentBatchCreateRequestDto dto) {
 
+        log.info("Entering  batchCreate(DocumentBatchCreateRequestDto dto) method");
+
         List<DocumentRequestDto> documentsToCreate = new ArrayList<>();
+
+        log.info("{} are gonna be created", dto.getDocumentQuantityToCreate());
 
         for (int i = 0; i < dto.getDocumentQuantityToCreate(); i++) {
 
             documentsToCreate.add(new DocumentRequestDto(dto.getAuthorId(), Constant.DOCUMENT_BATCH_CREATION_NAME));
+
+            log.info("{} document from {} are added to creation list", i+1, dto.getDocumentQuantityToCreate());
         }
 
-        return documentService.batchCreate(documentsToCreate);
+        List<DocumentShortResponseDto> documentShortResponseDtos = documentService.batchCreate(documentsToCreate);
+
+        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method");
+
+        return documentShortResponseDtos;
     }
 
     @Override

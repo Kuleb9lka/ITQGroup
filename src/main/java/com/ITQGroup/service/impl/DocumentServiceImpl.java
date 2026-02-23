@@ -26,6 +26,7 @@ import com.ITQGroup.reposiroty.ApprovalRegistryRepository;
 import com.ITQGroup.reposiroty.DocumentRepository;
 import com.ITQGroup.service.DocumentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
@@ -103,9 +105,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public List<DocumentShortResponseDto> batchCreate(List<DocumentRequestDto> list) {
 
+        log.info("Entering batchCreate(List<DocumentRequestDto> list) method");
+
         List<Document> documents = constructAndMapBatch(list);
 
+        log.info("Trying to save all document batch");
+
         List<Document> savedDocuments = documentRepository.saveAll(documents);
+
+        log.info("Exit batchCreate(List<DocumentRequestDto> list) method");
 
         return documentMapper.toShortResponseList(savedDocuments);
     }
@@ -164,7 +172,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos){
 
-        return requestDtos.stream()
+        log.info("Entering constructAndMapBatch(List<DocumentRequestDto> requestDtos) method");
+
+        List<Document> documents = requestDtos.stream()
                 .map(dto -> {
 
                     Document document = documentMapper.toEntityFromRequestDto(dto);
@@ -174,6 +184,10 @@ public class DocumentServiceImpl implements DocumentService {
                     return document;
                 })
                 .toList();
+
+        log.info("Exit constructAndMapBatch(List<DocumentRequestDto> requestDtos) method");
+
+        return documents;
     }
 
 
