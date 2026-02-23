@@ -1,4 +1,4 @@
-package com.ITQGroup.scheduling;
+package com.ITQGroup.scheduler;
 
 import com.ITQGroup.worker.impl.DocumentApprovalWorker;
 import lombok.RequiredArgsConstructor;

@@ -20,7 +20,9 @@ public interface DocumentService {
 
     List<DocumentResponseDto> search(DocumentFilterDto documentFilterDto);
 
-    Page<DocumentResponseDto> findAllByIds(List<Long> ids, DocumentPageableDto dto);
+    Page<DocumentResponseDto> getAllByIds(List<Long> ids, DocumentPageableDto dto);
+
+    List<DocumentShortResponseDto> batchCreate(List<DocumentRequestDto> list);
 
     DocumentResponseDto create(DocumentRequestDto dto);
 

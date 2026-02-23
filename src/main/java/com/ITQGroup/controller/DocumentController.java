@@ -1,12 +1,15 @@
 package com.ITQGroup.controller;
 
 import com.ITQGroup.api.DocumentApi;
+import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.PageResponseDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
+import com.ITQGroup.entity.Document;
 import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
@@ -35,6 +38,11 @@ public class DocumentController implements DocumentApi {
     public DocumentResponseDto create(@RequestBody @Valid DocumentRequestDto dto) {
 
         return documentService.create(dto);
+    }
+
+    @PostMapping("/batch-create")
+    public List<DocumentShortResponseDto> batchCreate(@RequestBody DocumentBatchCreateRequestDto dto){
+        return documentBatchService.batchCreate(dto);
     }
 
     @GetMapping("/{id}")

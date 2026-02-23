@@ -7,6 +7,8 @@ import java.util.Map;
 
 public final class Constant {
 
+    public static final String DOCUMENT_BATCH_CREATION_NAME = "Batch creation name";
+
     public static final Map<DocumentStatus, Action> DOCUMENT_ACTIONS_MAP = Map.ofEntries(
             Map.entry(DocumentStatus.DRAFT, Action.SUBMIT),
             Map.entry(DocumentStatus.SUBMITTED, Action.APPROVE)
