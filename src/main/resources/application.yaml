@@ -26,3 +26,8 @@ worker:
     batch-size: ${APPROVE_WORKER_BATCH_SIZE:5}
     enabled: true
     cron-expression: ${APPROVAL_WORKER_CRON_EXPRESSION:*/30 * * * * *}
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    root: info
