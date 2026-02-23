@@ -2,6 +2,7 @@ package com.ITQGroup.service.impl;
 
 import com.ITQGroup.constant.Constant;
 import com.ITQGroup.constant.ExceptionConstant;
+import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
@@ -38,13 +39,13 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     }
 
     @Override
-    public List<DocumentShortResponseDto> batchCreate(Long authorId, Integer documentsQuantityToCreate) {
+    public List<DocumentShortResponseDto> batchCreate(DocumentBatchCreateRequestDto dto) {
 
         List<DocumentRequestDto> documentsToCreate = new ArrayList<>();
 
-        for (int i = 0; i < documentsQuantityToCreate; i++) {
+        for (int i = 0; i < dto.getDocumentQuantityToCreate(); i++) {
 
-            documentsToCreate.add(new DocumentRequestDto(authorId, Constant.DOCUMENT_BATCH_CREATION_NAME));
+            documentsToCreate.add(new DocumentRequestDto(dto.getAuthorId(), Constant.DOCUMENT_BATCH_CREATION_NAME));
         }
 
         return documentService.batchCreate(documentsToCreate);

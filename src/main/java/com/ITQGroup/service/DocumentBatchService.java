@@ -1,5 +1,6 @@
 package com.ITQGroup.service;
 
+import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
@@ -12,7 +13,7 @@ public interface DocumentBatchService {
 
     Page<DocumentResponseDto> getByListIds(List<Long> ids, DocumentPageableDto pageDto);
 
-    List<DocumentShortResponseDto> batchCreate(Long authorId, Integer documentsQuantityToCreate);
+    List<DocumentShortResponseDto> batchCreate(DocumentBatchCreateRequestDto dto);
 
     List<DocumentProcessingResultDto> sendBatchSubmitted(Long authorId, List<Long> ids);
 

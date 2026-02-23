@@ -57,6 +57,12 @@ public interface DocumentMapper {
 
         DocumentProcessingResultDto constructResultDto(Long documentId, String status, String responseMessage);
 
+        @Mapping(target = "id", ignore = true)
+        @Mapping(target = "authorId", ignore = true)
+        @Mapping(target = "name", ignore = true)
+        @Mapping(target = "updateDate", ignore = true)
+        @Mapping(target = "historyList", ignore = true)
+        @Mapping(target = "version", ignore = true)
         void fillAdditionalInfo(@MappingTarget Document document, UUID uniqueNumber, DocumentStatus status, LocalDateTime createDate);
 
 
