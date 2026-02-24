@@ -70,13 +70,17 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public List<DocumentProcessingResultDto> sendBatchSubmitted(Long authorId, List<Long> docsIds) {
 
-        log.info("Entering sendBatchSubmitted(Long authorId, List<Long> docsIds) method");
+        long start = System.nanoTime();
+
+        log.info("Entering sendBatchSubmitted(Long authorId ...) method");
 
         log.info("{} documents submitted to consideration", docsIds.size());
 
         List<DocumentProcessingResultDto> documentProcessingResultDtos = processDocuments(authorId, docsIds, DocumentStatus.DRAFT, DocumentStatus.SUBMITTED);
 
-        log.info("Exit sendBatchSubmitted(Long authorId, List<Long> docsIds) method");
+        long end = System.nanoTime();
+
+        log.info("Exit sendBatchSubmitted(Long authorId ...) method. Execution time: {}", end-start);
 
         return documentProcessingResultDtos;
     }
@@ -84,11 +88,15 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public List<DocumentProcessingResultDto> sendBatchApproved(Long authorId, List<Long> docsIds) {
 
+        long start = System.nanoTime();
+
         log.info("Entering sendBatchApproved(Long authorId ...) method");
 
         List<DocumentProcessingResultDto> documentProcessingResultDtos = processDocuments(authorId, docsIds, DocumentStatus.SUBMITTED, DocumentStatus.APPROVED);
 
-        log.info("Exit sendBatchApproved(Long authorId ...) method");
+        long end = System.nanoTime();
+
+        log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", end-start);
 
         return documentProcessingResultDtos;
     }
