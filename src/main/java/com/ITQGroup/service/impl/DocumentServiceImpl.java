@@ -148,7 +148,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public void updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) {
 
-        log.info("Entering  updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
+        log.info("Entering  updateDocumentStatus(Long documentId ...) method");
 
         Long authorId = dto.getAuthorId();
 
@@ -196,7 +196,7 @@ public class DocumentServiceImpl implements DocumentService {
             }
         }
 
-        log.info("Exit updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
+        log.info("Exit updateDocumentStatus(Long documentId ...) method");
     }
 
     private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos) {
@@ -260,7 +260,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     private void checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) {
 
-        log.info("Entering checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
+        log.info("Entering checkStatusConflict(DocumentStatus currentDocStatus ...) method");
 
         if (!currentDocStatus.equals(oldStatus)) {
 
@@ -269,6 +269,6 @@ public class DocumentServiceImpl implements DocumentService {
             throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, ResponseStatus.CONFLICT.name());
         }
 
-        log.info("Exit checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
+        log.info("Exit checkStatusConflict(DocumentStatus currentDocStatus ...) method");
     }
 }

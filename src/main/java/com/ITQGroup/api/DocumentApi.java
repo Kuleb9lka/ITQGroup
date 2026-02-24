@@ -78,7 +78,7 @@ public interface DocumentApi {
             @ApiResponse(responseCode = "409", description = "Document status conflict."),
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
-    List<DocumentProcessingResultDto> sendToSubmitted(
+    List<DocumentProcessingResultDto> sendToSubmission(
             Long authorId,
             List<Long> ids
     );

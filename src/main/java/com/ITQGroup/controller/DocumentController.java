@@ -87,14 +87,14 @@ public class DocumentController implements DocumentApi {
         );
     }
 
-    @PostMapping("/send-submitted/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmitted(@PathVariable Long authorId, @RequestBody List<Long> ids) {
+    @PostMapping("/send-submission/{authorId}")
+    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable Long authorId, @RequestBody List<Long> ids) {
 
-        log.info("Entering sendToSubmitted(Long authorId, List<Long> ids) controller method");
+        log.info("Entering sendToSubmitted(Long authorId ...) method");
 
         List<DocumentProcessingResultDto> documentProcessingResultDtos = documentBatchService.sendBatchSubmitted(authorId, ids);
 
-        log.info("Exit sendToSubmitted(Long authorId, List<Long> ids) controller method");
+        log.info("Exit sendToSubmitted(Long authorId ...) controller method");
 
         return documentProcessingResultDtos;
     }
@@ -102,11 +102,11 @@ public class DocumentController implements DocumentApi {
     @PostMapping("/send-approval/{authorId}")
     public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId, @RequestBody List<Long> ids) {
 
-        log.info("Entering sendToApproval(Long authorId, List<Long> ids) controller method");
+        log.info("Entering sendToApproval(Long authorId ...) controller method");
 
         List<DocumentProcessingResultDto> documentProcessingResultDtos = documentBatchService.sendBatchApproved(authorId, ids);
 
-        log.info("Exit sendToApproval(Long authorId, List<Long> ids) controller method");
+        log.info("Exit sendToApproval(Long authorId ...) controller method");
 
         return documentProcessingResultDtos;
     }
