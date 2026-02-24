@@ -1,6 +1,6 @@
 package com.ITQGroup.exception;
 
-public abstract class DocumentProcessingException extends RuntimeException{
+public abstract class DocumentProcessingException extends RuntimeException {
 
     private String responseStatus;
 

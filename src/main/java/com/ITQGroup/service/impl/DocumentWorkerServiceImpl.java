@@ -38,12 +38,12 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService {
         documentBatchService.sendBatchApproved(1L, documentIds);
     }
 
-    private List<DocumentShortResponseDto> getDocsByStatusAndLimit(DocumentStatus status, Integer limit){
+    private List<DocumentShortResponseDto> getDocsByStatusAndLimit(DocumentStatus status, Integer limit) {
 
         return documentService.getByStatusLimited(status, limit);
     }
 
-    private List<Long> extractDocsIds(List<DocumentShortResponseDto> list){
+    private List<Long> extractDocsIds(List<DocumentShortResponseDto> list) {
 
         return list.stream()
                 .map(DocumentShortResponseDto::getId).toList();

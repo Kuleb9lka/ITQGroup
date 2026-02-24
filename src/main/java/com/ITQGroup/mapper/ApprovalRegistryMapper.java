@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         )
 public interface ApprovalRegistryMapper {
 
-        @Mapping(target = "id", ignore = true)
-        @Mapping(target = "document", source = "document")
-        ApprovalRegistry construct(Document document, Long authorId, LocalDateTime approvedAt);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "document", source = "document")
+    ApprovalRegistry construct(Document document, Long authorId, LocalDateTime approvedAt);
 }

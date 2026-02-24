@@ -55,14 +55,14 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
             documentsToCreate.add(new DocumentRequestDto(dto.getAuthorId(), Constant.DOCUMENT_BATCH_CREATION_NAME));
 
-            log.info("{} document from {} are added to creation list", i+1, dto.getDocumentQuantityToCreate());
+            log.info("{} document from {} are added to creation list", i + 1, dto.getDocumentQuantityToCreate());
         }
 
         List<DocumentShortResponseDto> documentShortResponseDtos = documentService.batchCreate(documentsToCreate);
 
         long end = System.nanoTime();
 
-        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method. Execution time: {}", end-start);
+        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method. Execution time: {}", end - start);
 
         return documentShortResponseDtos;
     }
@@ -80,7 +80,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         long end = System.nanoTime();
 
-        log.info("Exit sendBatchSubmitted(Long authorId ...) method. Execution time: {}", end-start);
+        log.info("Exit sendBatchSubmitted(Long authorId ...) method. Execution time: {}", end - start);
 
         return documentProcessingResultDtos;
     }
@@ -96,7 +96,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         long end = System.nanoTime();
 
-        log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", end-start);
+        log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", end - start);
 
         return documentProcessingResultDtos;
     }
