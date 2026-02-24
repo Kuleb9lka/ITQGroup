@@ -20,14 +20,14 @@ spring:
 worker:
   submission:
     batch-size: ${SUBMIT_WORKER_BATCH_SIZE:5}
-    enabled: true
+    enabled: false
     cron-expression: ${SUBMISSION_WORKER_CRON_EXPRESSION:*/30 * * * * *}
   approval:
     batch-size: ${APPROVE_WORKER_BATCH_SIZE:5}
-    enabled: true
+    enabled: false
     cron-expression: ${APPROVAL_WORKER_CRON_EXPRESSION:*/30 * * * * *}
 logging:
   pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%thread]){faint} %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
   level:
     root: info

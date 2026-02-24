@@ -122,12 +122,24 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentResponseDto create(DocumentRequestDto dto) {
 
+        log.info("Entering  create(DocumentRequestDto dto) method");
+
+        long start = System.nanoTime();
+
         Document document =
                 documentMapper.toEntityFromRequestDto(dto);
 
         documentMapper.fillAdditionalInfo(document, UUID.randomUUID(), DocumentStatus.DRAFT, LocalDateTime.now());
 
+        log.info("Trying to save new document");
+
         Document savedDocument = documentRepository.save(document);
+
+        log.info("Document was successfully saved");
+
+        long end = System.nanoTime();
+
+        log.info("Exit create(DocumentRequestDto dto) method. Execution time: {}", end-start);
 
         return documentMapper.toResponseDto(savedDocument);
     }
@@ -136,7 +148,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Transactional
     public void updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) {
 
-        log.info("Entering  updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
+        log.info("Entering  updateDocumentStatus(Long documentId ...) method");
 
         Long authorId = dto.getAuthorId();
 
@@ -184,10 +196,10 @@ public class DocumentServiceImpl implements DocumentService {
             }
         }
 
-        log.info("Exit updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
+        log.info("Exit updateDocumentStatus(Long documentId ...) method");
     }
 
-    private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos){
+    private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos) {
 
         log.info("Entering constructAndMapBatch(List<DocumentRequestDto> requestDtos) method");
 
@@ -248,7 +260,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     private void checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) {
 
-        log.info("Entering checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
+        log.info("Entering checkStatusConflict(DocumentStatus currentDocStatus ...) method");
 
         if (!currentDocStatus.equals(oldStatus)) {
 
@@ -257,6 +269,6 @@ public class DocumentServiceImpl implements DocumentService {
             throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, ResponseStatus.CONFLICT.name());
         }
 
-        log.info("Exit checkStatusConflict(DocumentStatus currentDocStatus, DocumentStatus oldStatus) method");
+        log.info("Exit checkStatusConflict(DocumentStatus currentDocStatus ...) method");
     }
 }
