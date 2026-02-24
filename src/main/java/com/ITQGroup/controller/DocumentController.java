@@ -1,15 +1,14 @@
 package com.ITQGroup.controller;
 
 import com.ITQGroup.api.DocumentApi;
-import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
-import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.PageResponseDto;
+import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
+import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
 import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
-import com.ITQGroup.entity.Document;
 import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
@@ -51,13 +50,13 @@ public class DocumentController implements DocumentApi {
 
         long end = System.nanoTime();
 
-        log.info("Exit create(DocumentRequestDto dto) controller method. Execution time: {}", end-start);
+        log.info("Exit create(DocumentRequestDto dto) controller method. Execution time: {}", end - start);
 
         return documentResponseDto;
     }
 
     @PostMapping("/batch-create")
-    public List<DocumentShortResponseDto> batchCreate(@RequestBody DocumentBatchCreateRequestDto dto){
+    public List<DocumentShortResponseDto> batchCreate(@RequestBody DocumentBatchCreateRequestDto dto) {
 
         log.info("Entering batchCreate(DocumentBatchCreateRequestDto dto) controller method");
         List<DocumentShortResponseDto> documentShortResponseDtos = documentBatchService.batchCreate(dto);
@@ -72,7 +71,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/search")
-    public List<DocumentResponseDto> search(@RequestBody @Valid DocumentFilterDto filterDto){
+    public List<DocumentResponseDto> search(@RequestBody @Valid DocumentFilterDto filterDto) {
 
         return documentService.search(filterDto);
     }

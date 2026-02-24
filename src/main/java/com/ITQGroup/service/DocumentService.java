@@ -16,6 +16,7 @@ public interface DocumentService {
     DocumentResponseDto getById(Long id);
 
     List<DocumentShortResponseDto> getByStatusLimited(DocumentStatus status, Integer limit);
+
     DocumentResponseDto getByIdWithHistory(Long id);
 
     List<DocumentResponseDto> search(DocumentFilterDto documentFilterDto);

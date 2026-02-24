@@ -14,7 +14,7 @@ public class DocumentSubmissionScheduler {
     private final DocumentSubmissionWorker submissionWorker;
 
     @Scheduled(cron = "${worker.submission.cron-expression}")
-    public void run(){
+    public void run() {
 
         submissionWorker.work();
     }
