@@ -15,7 +15,6 @@ import com.ITQGroup.entity.History;
 import com.ITQGroup.enums.Action;
 import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.enums.ResponseStatus;
-import com.ITQGroup.exception.ApprovalRegistryException;
 import com.ITQGroup.exception.DocumentNotFoundException;
 import com.ITQGroup.exception.DocumentStatusConflictException;
 import com.ITQGroup.exception.StatusNotFoundException;
@@ -33,6 +32,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -179,21 +179,14 @@ public class DocumentServiceImpl implements DocumentService {
 
             log.info("Trying to save approved document to Approval Registry");
 
-            try {
-                ApprovalRegistry constructedRegistry =
-                        registryMapper.construct(documentById, authorId, constructedHistory.getUpdateDate());
+            ApprovalRegistry constructedRegistry =
+                    registryMapper.construct(documentById, authorId, constructedHistory.getUpdateDate());
 
-                log.info("Trying to save approval registry entity with document ID: {}, author ID: {}", documentById, authorId);
+            log.info("Trying to save approval registry entity with document ID: {}, author ID: {}", documentById, authorId);
 
-                registryRepository.save(constructedRegistry);
+            registryRepository.save(constructedRegistry);
 
-                log.info("Approval registry entity was successfully saved");
-            } catch (Exception e) {
-
-                log.error("Error while trying to save approval registry entity");
-
-                throw new ApprovalRegistryException(ExceptionConstant.FAILED_WRITE_DOCUMENT_REGISTRY + documentById.getId(), ResponseStatus.APPROVAL_REGISTRY_ERROR.name());
-            }
+            log.info("Approval registry entity was successfully saved");
         }
 
         log.info("Exit updateDocumentStatus(Long documentId ...) method");

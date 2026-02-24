@@ -40,7 +40,7 @@ public class DocumentController implements DocumentApi {
 
 
     @PostMapping("/create")
-    public DocumentResponseDto create(@RequestBody @Valid DocumentRequestDto dto) {
+    public DocumentResponseDto create(@RequestBody DocumentRequestDto dto) {
 
         log.info("Entering create(DocumentRequestDto dto) controller method");
 
@@ -65,19 +65,19 @@ public class DocumentController implements DocumentApi {
     }
 
     @GetMapping("/{id}")
-    public DocumentResponseDto getById(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long id) {
+    public DocumentResponseDto getById(@PathVariable Long id) {
 
         return documentService.getByIdWithHistory(id);
     }
 
     @PostMapping("/search")
-    public List<DocumentResponseDto> search(@RequestBody @Valid DocumentFilterDto filterDto) {
+    public List<DocumentResponseDto> search(@RequestBody DocumentFilterDto filterDto) {
 
         return documentService.search(filterDto);
     }
 
     @PostMapping("/filter")
-    public PageResponseDto<DocumentResponseDto> getAllByListId(@RequestBody List<Long> documentIds, @Valid DocumentPageableDto pageableSettings) {
+    public PageResponseDto<DocumentResponseDto> getAllByListId(@RequestBody List<Long> documentIds, DocumentPageableDto pageableSettings) {
 
         Page<DocumentResponseDto> page = documentBatchService.getByListIds(documentIds, pageableSettings);
 
@@ -91,8 +91,8 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-submission/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long authorId,
-                                                              @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable Long authorId,
+                                                              @RequestBody List<Long> ids) {
 
         log.info("Entering sendToSubmitted(Long authorId ...) method");
 
@@ -104,8 +104,8 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-approval/{authorId}")
-    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long authorId,
-                                                            @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId,
+                                                            @RequestBody List<Long> ids) {
 
         log.info("Entering sendToApproval(Long authorId ...) controller method");
 
