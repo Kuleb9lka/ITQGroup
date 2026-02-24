@@ -14,6 +14,7 @@ import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -91,7 +92,8 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-submission/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive Long authorId, @RequestBody List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive Long authorId,
+                                                              @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
 
         log.info("Entering sendToSubmitted(Long authorId ...) method");
 
@@ -103,7 +105,8 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-approval/{authorId}")
-    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive Long authorId, @RequestBody List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive Long authorId,
+                                                            @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
 
         log.info("Entering sendToApproval(Long authorId ...) controller method");
 
