@@ -66,7 +66,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @GetMapping("/{id}")
-    public DocumentResponseDto getById(@PathVariable @Positive Long id) {
+    public DocumentResponseDto getById(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long id) {
 
         return documentService.getByIdWithHistory(id);
     }
@@ -92,7 +92,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-submission/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive Long authorId,
+    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long authorId,
                                                               @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
 
         log.info("Entering sendToSubmitted(Long authorId ...) method");
@@ -105,7 +105,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-approval/{authorId}")
-    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive Long authorId,
+    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive(message = "Document ID can't be negative or zero") Long authorId,
                                                             @RequestBody @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids) {
 
         log.info("Entering sendToApproval(Long authorId ...) controller method");
