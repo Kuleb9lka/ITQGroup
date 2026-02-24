@@ -1,5 +1,6 @@
 package com.ITQGroup.integration;
 
+import com.ITQGroup.AbstractIntegrationTest;
 import com.ITQGroup.entity.Document;
 import com.ITQGroup.enums.DocumentStatus;
 import com.ITQGroup.reposiroty.DocumentRepository;
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-public class ShouldCreateDocumentTest extends AbstractIntegrationTest{
+public class ShouldCreateDocumentTest extends AbstractIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
