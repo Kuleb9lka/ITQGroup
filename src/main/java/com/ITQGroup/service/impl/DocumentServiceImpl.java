@@ -124,6 +124,8 @@ public class DocumentServiceImpl implements DocumentService {
 
         log.info("Entering  create(DocumentRequestDto dto) method");
 
+        long start = System.nanoTime();
+
         Document document =
                 documentMapper.toEntityFromRequestDto(dto);
 
@@ -135,7 +137,9 @@ public class DocumentServiceImpl implements DocumentService {
 
         log.info("Document was successfully saved");
 
-        log.info("Exit create(DocumentRequestDto dto) method");
+        long end = System.nanoTime();
+
+        log.info("Exit create(DocumentRequestDto dto) method. Execution time: {}", end-start);
 
         return documentMapper.toResponseDto(savedDocument);
     }
