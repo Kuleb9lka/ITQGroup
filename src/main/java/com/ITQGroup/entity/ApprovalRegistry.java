@@ -35,7 +35,7 @@ public class ApprovalRegistry {
     @JoinColumn(name = "document_id", nullable = false, unique = true)
     private Document document;
 
-    @Column(name = "author_id")
+    @Column(name = "author_id", nullable = false)
     @NotNull(message = "Author ID can't be null")
     @Positive(message = "Author ID can't be negative")
     private Long authorId;
