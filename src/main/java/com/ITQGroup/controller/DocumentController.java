@@ -13,9 +13,11 @@ import com.ITQGroup.entity.Document;
 import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/documents")
 @Slf4j
+@Validated
 public class DocumentController implements DocumentApi {
 
     private final DocumentService documentService;
@@ -62,13 +65,13 @@ public class DocumentController implements DocumentApi {
     }
 
     @GetMapping("/{id}")
-    public DocumentResponseDto getById(@PathVariable Long id) {
+    public DocumentResponseDto getById(@PathVariable @Positive Long id) {
 
         return documentService.getByIdWithHistory(id);
     }
 
     @PostMapping("/search")
-    public List<DocumentResponseDto> search(@RequestBody DocumentFilterDto filterDto){
+    public List<DocumentResponseDto> search(@RequestBody @Valid DocumentFilterDto filterDto){
 
         return documentService.search(filterDto);
     }
@@ -88,7 +91,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-submission/{authorId}")
-    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable Long authorId, @RequestBody List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToSubmission(@PathVariable @Positive Long authorId, @RequestBody List<Long> ids) {
 
         log.info("Entering sendToSubmitted(Long authorId ...) method");
 
@@ -100,7 +103,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/send-approval/{authorId}")
-    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable Long authorId, @RequestBody List<Long> ids) {
+    public List<DocumentProcessingResultDto> sendToApproval(@PathVariable @Positive Long authorId, @RequestBody List<Long> ids) {
 
         log.info("Entering sendToApproval(Long authorId ...) controller method");
 
