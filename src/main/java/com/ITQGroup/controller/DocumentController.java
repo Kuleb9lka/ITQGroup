@@ -39,7 +39,17 @@ public class DocumentController implements DocumentApi {
     @PostMapping("/create")
     public DocumentResponseDto create(@RequestBody @Valid DocumentRequestDto dto) {
 
-        return documentService.create(dto);
+        log.info("Entering create(DocumentRequestDto dto) controller method");
+
+        long start = System.nanoTime();
+
+        DocumentResponseDto documentResponseDto = documentService.create(dto);
+
+        long end = System.nanoTime();
+
+        log.info("Exit create(DocumentRequestDto dto) controller method. Execution time: {}", end-start);
+
+        return documentResponseDto;
     }
 
     @PostMapping("/batch-create")

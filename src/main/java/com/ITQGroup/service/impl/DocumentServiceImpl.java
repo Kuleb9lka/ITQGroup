@@ -122,12 +122,20 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentResponseDto create(DocumentRequestDto dto) {
 
+        log.info("Entering  create(DocumentRequestDto dto) method");
+
         Document document =
                 documentMapper.toEntityFromRequestDto(dto);
 
         documentMapper.fillAdditionalInfo(document, UUID.randomUUID(), DocumentStatus.DRAFT, LocalDateTime.now());
 
+        log.info("Trying to save new document");
+
         Document savedDocument = documentRepository.save(document);
+
+        log.info("Document was successfully saved");
+
+        log.info("Exit create(DocumentRequestDto dto) method");
 
         return documentMapper.toResponseDto(savedDocument);
     }
@@ -187,7 +195,7 @@ public class DocumentServiceImpl implements DocumentService {
         log.info("Exit updateDocumentStatus(Long documentId, DocumentUpdateStatusDto dto) method");
     }
 
-    private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos){
+    private List<Document> constructAndMapBatch(List<DocumentRequestDto> requestDtos) {
 
         log.info("Entering constructAndMapBatch(List<DocumentRequestDto> requestDtos) method");
 
