@@ -43,6 +43,8 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
     @Override
     public List<DocumentShortResponseDto> batchCreate(DocumentBatchCreateRequestDto dto) {
 
+        long start = System.nanoTime();
+
         log.info("Entering  batchCreate(DocumentBatchCreateRequestDto dto) method");
 
         List<DocumentRequestDto> documentsToCreate = new ArrayList<>();
@@ -58,7 +60,9 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         List<DocumentShortResponseDto> documentShortResponseDtos = documentService.batchCreate(documentsToCreate);
 
-        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method");
+        long end = System.nanoTime();
+
+        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method. Execution time: {}", end-start);
 
         return documentShortResponseDtos;
     }
