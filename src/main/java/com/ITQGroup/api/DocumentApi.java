@@ -82,6 +82,6 @@ public interface DocumentApi {
     })
     List<DocumentProcessingResultDto> sendToApproval(
             @Positive(message = "Author ID can't be negative or zero") Long authorId,
-            @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included")List<Long> ids
+            @Size(min = 1, max = 1000, message = "ID list should contains from 1 to 1000 ids included") List<Long> ids
     );
 }
