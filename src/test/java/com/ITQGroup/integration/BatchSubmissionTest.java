@@ -27,7 +27,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,7 +96,7 @@ public class BatchSubmissionTest extends AbstractIntegrationTest {
 
         assertThat(response)
                 .extracting(DocumentProcessingResultDto::getStatus)
-                        .containsOnly("SUCCESS");
+                .containsOnly("SUCCESS");
         assertThat(documentRepository.findAll())
                 .filteredOn(document -> document.getStatus().equals(DocumentStatus.DRAFT))
                 .isEmpty();
@@ -135,7 +134,8 @@ public class BatchSubmissionTest extends AbstractIntegrationTest {
         String json = result.getResponse().getContentAsString();
         List<DocumentProcessingResultDto> webResponse = objectMapper.readValue(
                 json,
-                new TypeReference<List<DocumentProcessingResultDto>>() {}
+                new TypeReference<List<DocumentProcessingResultDto>>() {
+                }
         );
 
         long successCount = webResponse.stream()
