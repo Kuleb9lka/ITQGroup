@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 25022026-create-indexes
+      author: bogdan_lopatenko
+      changes:
+        - createIndex:
+            indexName: idx_documents_status
+            tableName: documents
+            columns:
+              - column:
+                  name: status
+
+        - createIndex:
+            indexName: idx_history_document_id
+            tableName: history
+            columns:
+              - column:
+                  name: document_id

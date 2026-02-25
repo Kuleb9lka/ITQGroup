@@ -1,10 +1,12 @@
 package com.ITQGroup.api;
 
 import com.ITQGroup.dto.PageResponseDto;
+import com.ITQGroup.dto.document.DocumentBatchCreateRequestDto;
 import com.ITQGroup.dto.document.DocumentPageableDto;
 import com.ITQGroup.dto.document.DocumentProcessingResultDto;
 import com.ITQGroup.dto.document.DocumentRequestDto;
 import com.ITQGroup.dto.document.DocumentResponseDto;
+import com.ITQGroup.dto.document.DocumentShortResponseDto;
 import com.ITQGroup.dto.filter.DocumentFilterDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,6 +28,14 @@ public interface DocumentApi {
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
     DocumentResponseDto create(@Valid DocumentRequestDto dto);
+
+    @Operation(summary = "Create a batch of documents", description = "Create a bunch of new documents.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Documents created successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid request data."),
+            @ApiResponse(responseCode = "500", description = "Internal server error.")
+    })
+    List<DocumentShortResponseDto> batchCreate(@Valid DocumentBatchCreateRequestDto dto);
 
 
     @Operation(summary = "Get document by ID", description = "Retrieve a document with its history by ID.")
@@ -52,10 +62,7 @@ public interface DocumentApi {
             @ApiResponse(responseCode = "400", description = "Invalid pagination or ID list."),
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
-    PageResponseDto<DocumentResponseDto> getAllByListId(
-            List<Long> documentIds,
-            @Valid DocumentPageableDto pageableSettings
-    );
+    PageResponseDto<DocumentResponseDto> getAllByListId(List<Long> documentIds, @Valid DocumentPageableDto pageableSettings);
 
 
     @Operation(summary = "Send documents to SUBMITTED", description = "Batch update documents to SUBMITTED status.")

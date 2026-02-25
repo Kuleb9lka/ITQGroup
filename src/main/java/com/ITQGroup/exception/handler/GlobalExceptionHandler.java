@@ -8,8 +8,11 @@ import com.ITQGroup.exception.StatusNotFoundException;
 import jakarta.persistence.OptimisticLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -48,5 +51,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDto> handleException(Exception exception) {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDto(ResponseStatus.UNKNOWN_ERROR.name(), exception.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<ExceptionResponseDto>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+
+        List<ExceptionResponseDto> exceptionResponseDtos = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> new ExceptionResponseDto(ResponseStatus.CONFLICT.name(), error.getDefaultMessage())).toList();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponseDtos);
     }
 }
