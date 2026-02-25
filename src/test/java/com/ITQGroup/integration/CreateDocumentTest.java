@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @AutoConfigureMockMvc
-public class ShouldCreateDocumentTest extends AbstractIntegrationTest {
+public class CreateDocumentTest extends AbstractIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
