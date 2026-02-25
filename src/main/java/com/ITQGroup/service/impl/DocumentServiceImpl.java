@@ -24,6 +24,7 @@ import com.ITQGroup.mapper.HistoryMapper;
 import com.ITQGroup.reposiroty.ApprovalRegistryRepository;
 import com.ITQGroup.reposiroty.DocumentRepository;
 import com.ITQGroup.service.DocumentService;
+import com.ITQGroup.util.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -121,9 +122,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentResponseDto create(DocumentRequestDto dto) {
 
-        log.info("Entering  create(DocumentRequestDto dto) method");
-
         long start = System.nanoTime();
+
+        log.info("Entering  create(DocumentRequestDto dto) method");
 
         Document document =
                 documentMapper.toEntityFromRequestDto(dto);
@@ -138,7 +139,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         long end = System.nanoTime();
 
-        log.info("Exit create(DocumentRequestDto dto) method. Execution time: {}", end - start);
+        log.info("Exit create(DocumentRequestDto dto) method. Execution time: {}", TimeUtil.formatNanos(end-start));
 
         return documentMapper.toResponseDto(savedDocument);
     }

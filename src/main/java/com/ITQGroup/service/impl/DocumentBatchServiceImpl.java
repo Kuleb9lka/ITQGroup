@@ -15,6 +15,7 @@ import com.ITQGroup.exception.DocumentProcessingException;
 import com.ITQGroup.mapper.DocumentMapper;
 import com.ITQGroup.service.DocumentBatchService;
 import com.ITQGroup.service.DocumentService;
+import com.ITQGroup.util.TimeUtil;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         long end = System.nanoTime();
 
-        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method. Execution time: {}", end - start);
+        log.info("Exit batchCreate(DocumentBatchCreateRequestDto dto) method. Execution time: {}", TimeUtil.formatNanos(end - start));
 
         return documentShortResponseDtos;
     }
@@ -80,7 +81,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         long end = System.nanoTime();
 
-        log.info("Exit sendBatchSubmitted(Long authorId ...) method. Execution time: {}", end - start);
+        log.info("Exit sendBatchSubmitted(Long authorId ...) method. Execution time: {}", TimeUtil.formatNanos(end - start));
 
         return documentProcessingResultDtos;
     }
@@ -96,7 +97,7 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         long end = System.nanoTime();
 
-        log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", end - start);
+        log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", TimeUtil.formatNanos(end - start));
 
         return documentProcessingResultDtos;
     }

@@ -41,13 +41,9 @@ public class DocumentController implements DocumentApi {
 
         log.info("Entering create(DocumentRequestDto dto) controller method");
 
-        long start = System.nanoTime();
-
         DocumentResponseDto documentResponseDto = documentService.create(dto);
 
-        long end = System.nanoTime();
-
-        log.info("Exit create(DocumentRequestDto dto) controller method. Execution time: {}", end - start);
+        log.info("Exit create(DocumentRequestDto dto) controller method");
 
         return documentResponseDto;
     }
