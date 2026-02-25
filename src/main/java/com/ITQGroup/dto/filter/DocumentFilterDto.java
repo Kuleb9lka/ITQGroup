@@ -13,7 +13,7 @@ public class DocumentFilterDto {
 
     private DocumentStatus status;
 
-    @Positive(message = "Author ID can't be negative")
+    @Positive(message = "Author ID can't be negative or zero")
     private Long authorId;
 
     private LocalDateTime createDateFrom;
