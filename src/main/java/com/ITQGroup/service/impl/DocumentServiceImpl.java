@@ -257,7 +257,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         if (!currentDocStatus.equals(oldStatus)) {
 
-            log.error("Document has already status {}", currentDocStatus);
+            log.error("Current document status: {}", currentDocStatus);
 
             throw new DocumentStatusConflictException(ExceptionConstant.DOCUMENT_STATUS_CONFLICT + currentDocStatus, ResponseStatus.CONFLICT.name());
         }
