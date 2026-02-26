@@ -21,6 +21,7 @@
 		<mapstruct.binding.version>0.2.0</mapstruct.binding.version>
 		<mapstruct.processor.version>1.5.5.Final</mapstruct.processor.version>
 		<springdoc.version>2.7.0</springdoc.version>
+		<dotenv.version>3.0.0</dotenv.version>
 	</properties>
 
 	<dependencies>
@@ -112,7 +113,7 @@
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>dotenv-java</artifactId>
-			<version>3.0.0</version>
+			<version>${dotenv.version}</version>
 		</dependency>
 	</dependencies>
 
