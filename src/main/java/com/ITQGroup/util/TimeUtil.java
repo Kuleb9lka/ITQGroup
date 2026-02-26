@@ -4,7 +4,8 @@ import java.time.Duration;
 
 public final class TimeUtil {
 
-    private TimeUtil(){}
+    private TimeUtil() {
+    }
 
     public static String formatNanos(long nanos) {
         Duration duration = Duration.ofNanos(nanos);

@@ -6,42 +6,32 @@
 
 2. Запуск основного приложения.
 
-    - В корне проекта создаём файл .env и добавляем
+    - env файл со всеми данными проекта уже был добавлен в Git репозиторий. Обычно это плохая практика, но для ускорения запуска была добавлена.
 
-            DB_URL=jdbc:postgresql://localhost:5433/itqgroupdb
-            DB_USERNAME=postgres
-            DB_PASSWORD=admin
             APP_PORT=8088. Если меняете порт, обновите api.documents.url в application.yaml сторонней утилиты.
 
-3. Настройки приложения опционально.
-
     - Можно включить или выключить воркеры worker.submission.enabled: true/false worker.approval.enabled: true/false, изменить размер пакета batch-size: 5, изменить cron cron-expression: */30 * * * * * (запуск каждые 30 секунд).
-
-4. Сборка и запуск.
-
     - Выполняем mvn clean install. Запуск через IntelliJ IDEA Run (ItqGroupApplication) или Shift + F10.
 
-5. Запуск сторонней API-утилиты.
+3. Запуск сторонней API-утилиты.
 
     - server.port не должен совпадать с портом основного приложения (по умолчанию 8089). Если меняли APP_PORT, обновите api.documents.url: http://localhost:<новый порт>.
 
     - В файл ..\ITQGroup_side_api\src\main\resources\static\document-batch-creation-file.txt впишите любое положительное число.
     - Запуск утилиты через IntelliJ IDEA Run (ItqGroupApplication) или Shift + F10.
 
-6. Swagger UI для API.
+4. Swagger UI для API.
 
     - Основное приложение http://localhost:8088/swagger-ui/index.html
     - Утилита http://localhost:8089/swagger-ui/index.html
     - Если меняли порт, замените 8088/8089 на ваш.
 
-7. Логи
+5. Логи
 
     - Логи пишутся в /logs/app.log.
     - Настройки логов можно изменить в application.yaml в разделе logging.level, logging.pattern, logging.rollingpolicy.
 
-8. Минимальные требования. Docker Desktop, Java 17+, Maven, IntelliJ IDEA опционально.
-
-9. Проверка после запуска. Выполните docker ps, должен отображаться контейнер PostgreSQL.
+6. Минимальные требования. Docker Desktop, Java 17+, Maven, IntelliJ IDEA опционально.
 
 
 
