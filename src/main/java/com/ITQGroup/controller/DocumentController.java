@@ -70,7 +70,7 @@ public class DocumentController implements DocumentApi {
     }
 
     @PostMapping("/filter")
-    public PageResponseDto<DocumentResponseDto> getAllByListId(@RequestBody List<Long> documentIds, DocumentPageableDto pageableSettings) {
+    public PageResponseDto<DocumentResponseDto> filterWithPageable(@RequestBody List<Long> documentIds, DocumentPageableDto pageableSettings) {
 
         Page<DocumentResponseDto> page = documentBatchService.getByListIds(documentIds, pageableSettings);
 

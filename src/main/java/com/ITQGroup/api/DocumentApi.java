@@ -62,7 +62,7 @@ public interface DocumentApi {
             @ApiResponse(responseCode = "400", description = "Invalid pagination or ID list."),
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
-    PageResponseDto<DocumentResponseDto> getAllByListId(List<Long> documentIds, @Valid DocumentPageableDto pageableSettings);
+    PageResponseDto<DocumentResponseDto> filterWithPageable(List<Long> documentIds, @Valid DocumentPageableDto pageableSettings);
 
 
     @Operation(summary = "Send documents to SUBMITTED", description = "Batch update documents to SUBMITTED status.")

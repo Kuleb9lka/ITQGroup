@@ -48,18 +48,13 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
 
         log.info("Entering  batchCreate(DocumentBatchCreateRequestDto dto) method");
 
-        List<DocumentRequestDto> documentsToCreate = new ArrayList<>();
+        Integer documentQuantityToCreate = dto.getDocumentQuantityToCreate();
 
-        log.info("{} are gonna be created", dto.getDocumentQuantityToCreate());
+        log.info("{} are gonna be created", documentQuantityToCreate);
 
-        for (int i = 0; i < dto.getDocumentQuantityToCreate(); i++) {
+        List<DocumentRequestDto> documentsListToCreate = createDocumentsList(dto);
 
-            documentsToCreate.add(new DocumentRequestDto(dto.getAuthorId(), Constant.DOCUMENT_BATCH_CREATION_NAME));
-
-            log.info("{} document from {} are added to creation list", i + 1, dto.getDocumentQuantityToCreate());
-        }
-
-        List<DocumentShortResponseDto> documentShortResponseDtos = documentService.batchCreate(documentsToCreate);
+        List<DocumentShortResponseDto> documentShortResponseDtos = documentService.batchCreate(documentsListToCreate);
 
         long end = System.nanoTime();
 
@@ -100,6 +95,20 @@ public class DocumentBatchServiceImpl implements DocumentBatchService {
         log.info("Exit sendBatchApproved(Long authorId ...) method. Execution time: {}", TimeUtil.formatNanos(end - start));
 
         return documentProcessingResultDtos;
+    }
+
+    private List<DocumentRequestDto> createDocumentsList(DocumentBatchCreateRequestDto dto) {
+
+        List<DocumentRequestDto> documentsToCreate = new ArrayList<>();
+
+        for (int i = 0; i < dto.getDocumentQuantityToCreate(); i++) {
+
+            documentsToCreate.add(new DocumentRequestDto(dto.getAuthorId(), Constant.DOCUMENT_BATCH_CREATION_NAME));
+        }
+
+        log.info("{} documents prepared for batch creation", dto.getDocumentQuantityToCreate());
+
+        return documentsToCreate;
     }
 
     private List<DocumentProcessingResultDto> processDocuments(Long authorId, List<Long> ids, DocumentStatus currentStatus, DocumentStatus newStatus) {
