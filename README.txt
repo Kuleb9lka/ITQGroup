@@ -1,3 +1,15 @@
+Что бы вы поменяли, чтобы обработка одного запроса уверенно работала с
+5000+ id?
+
+Ответ: Для поддержки обработки 5000+ ID запрос разбивается на батчи, обрабатывается асинхронно с ограничением concurrency.
+
+Как бы вы вынесли реестр утверждений в отдельную систему (отдельная БД илиотдельный HTTP-сервис)?
+
+Ответ:
+Если проект небольшой и реестр не планируется как отдельный продукт, тогда я бы выбрал отдельную БД.
+Если реестр -- важный домен, который будет развиваться и требуется изоляция -- HTTP сервис.
+
+
 1. Запуск PostgreSQL в Docker контейнере.
 
     - Запускаем Docker Desktop.
@@ -6,18 +18,22 @@
 
 2. Запуск основного приложения.
 
-    - env файл со всеми данными проекта уже был добавлен в Git репозиторий. Обычно это плохая практика, но для ускорения запуска была добавлена.
+    - env файл со всеми данными проекта уже был добавлен в Git репозиторий. Обычно это плохая практика, но для ускорения
+     запуска была добавлена.
 
             APP_PORT=8088. Если меняете порт, обновите api.documents.url в application.yaml сторонней утилиты.
 
-    - Можно включить или выключить воркеры worker.submission.enabled: true/false worker.approval.enabled: true/false, изменить размер пакета batch-size: 5, изменить cron cron-expression: */30 * * * * * (запуск каждые 30 секунд).
+    - Можно включить или выключить воркеры worker.submission.enabled: true/false worker.approval.enabled: true/false,
+    изменить размер пакета batch-size: 5, изменить cron cron-expression: */30 * * * * * (запуск каждые 30 секунд).
     - Выполняем mvn clean install. Запуск через IntelliJ IDEA Run (ItqGroupApplication) или Shift + F10.
 
 3. Запуск сторонней API-утилиты.
 
-    - server.port не должен совпадать с портом основного приложения (по умолчанию 8089). Если меняли APP_PORT, обновите api.documents.url: http://localhost:<новый порт>.
+    - server.port не должен совпадать с портом основного приложения (по умолчанию 8089). Если меняли APP_PORT, обновите
+    api.documents.url: http://localhost:<новый порт>.
 
-    - В файл ..\ITQGroup_side_api\src\main\resources\static\document-batch-creation-file.txt впишите любое положительное число.
+    - В файл ..\ITQGroup_side_api\src\main\resources\static\document-batch-creation-file.txt впишите любое положительное
+     число.
     - Запуск утилиты через IntelliJ IDEA Run (ItqGroupApplication) или Shift + F10.
 
 4. Swagger UI для API.
